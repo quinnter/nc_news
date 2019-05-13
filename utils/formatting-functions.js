@@ -1,7 +1,7 @@
 const createRef = (input, key, value) => {
     const refObj = {};
     input.forEach(item => {
-      refObj[item[key]] = item[value];
+      refObj[key] = item[value];
     });
     console.log(refObj);
     return refObj;
