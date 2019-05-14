@@ -5,6 +5,16 @@ const createRef = (input, key, value) => {
     });
     return refObj;
 };
+
+const renameKeys = (input, keyToChange, newKey) => {
+  const newObj = input.map(item => {
+    const { [keyToChange]: value, ...restOfInput } = item;
+    return { [newKey]: value, ...restOfInput };
+  });
+  console.log(newObj);
+  return newObj;
+};
+
 const createArticleUsername = (articleData, refObj) => {
   const formattedArticle = articleData.map(({author,...articleKeys}) => {
      return {author: refObj[username], ...articleKeys}
@@ -30,4 +40,4 @@ const formatDate = (input) => {
 }
 
 
-module.exports = { createRef, createArticleUsername, createArticleTopic, formatDate }
+module.exports = { createRef, createArticleUsername, createArticleTopic, formatDate, renameKeys }
