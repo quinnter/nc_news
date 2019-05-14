@@ -20,13 +20,13 @@ const createArticleTopic = (articleData, refObj) => {
 };
 
 const formatDate = (input) => {
-  const articleWithTime = input.map(article => {
-    const timestamp = article.created_at;
-    const newArticleObj = article
-    newArticleObj.created_at = new Date(timestamp).toUTCString();
-    console.log(newArticleObj)
+  const inputWithTime = input.map(item => {
+    const timestamp = item.created_at;
+    const newInputObj = item
+    newInputObj.created_at = new Date(timestamp).toUTCString();
+    return newInputObj
   })
-  return articleWithTime
+  return inputWithTime
 }
 
 
