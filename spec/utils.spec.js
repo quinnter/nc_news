@@ -3,7 +3,8 @@ const {
   createRef,
   createArticleUsername,
   createArticleTopic,
-  formatDate
+  formatDate,
+  renameKeys
 } = require("../utils/formatting-functions");
 
 describe("createRef", () => {
@@ -52,4 +53,51 @@ describe("formatDate", () => {
           }];
         expect(actual).to.eql(expected);
     })
+
+describe.only("renameKeys", () => {
+    it("returns new empty array when input is an empty array", () => {
+        const input = [];
+        const keyToChange = "";
+        const newKey = "";
+        const actual = renameKeys(input, keyToChange, newKey );
+        const expected = [];
+        expect(actual).to.eql(expected);
+    })
+    it("returns an object with the keys changed", () => {
+        const input = [{
+            body: 'git push origin master',
+            belongs_to: 'Living in the shadow of a great man',
+            created_by: 'icellusedkars',
+            votes: 0,
+            created_at: 1227530163389,
+          }, 
+          {
+            body:
+              "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+            belongs_to: "They're not exactly dogs, are they?",
+            created_by: 'butter_bridge',
+            votes: 16,
+            created_at: 1511354163389,
+          }];
+        const keyToChange = "belongs_to";
+        const newKey = "article_id";
+        const actual = renameKeys(input, keyToChange, newKey );
+        const expected = [{
+            body: 'git push origin master',
+            article_id: 'Living in the shadow of a great man',
+            created_by: 'icellusedkars',
+            votes: 0,
+            created_at: 1227530163389,
+          },
+          {
+            body:
+              "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+            article_id: "They're not exactly dogs, are they?",
+            created_by: 'butter_bridge',
+            votes: 16,
+            created_at: 1511354163389,
+          }];
+        expect(actual).to.eql(expected);
+    })
+  })
 })
