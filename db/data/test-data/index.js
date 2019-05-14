@@ -6,7 +6,7 @@ const commentsData = require("./comments")
 const testData = {
     topicsData: topicsData,
     usersData: usersData,
-    articles: articlesData,
+    articlesData: articlesData,
     commentsData: commentsData
 }
 
