@@ -1,8 +1,7 @@
 const { expect } = require("chai");
 const {
   createRef,
-  createArticleUsername,
-  createArticleTopic,
+  commentsWithArticleId,
   formatDate,
   renameKeys
 } = require("../utils/formatting-functions");
@@ -54,7 +53,7 @@ describe("formatDate", () => {
         expect(actual).to.eql(expected);
     })
 
-describe.only("renameKeys", () => {
+describe("renameKeys", () => {
     it("returns new empty array when input is an empty array", () => {
         const input = [];
         const keyToChange = "";
@@ -100,4 +99,31 @@ describe.only("renameKeys", () => {
         expect(actual).to.eql(expected);
     })
   })
+})
+
+describe.only("commentsWithArticleId", () => {
+    it("returns new empty array when passed an empty array ", () => {
+        const comments = [];
+        const articleLookup = {};
+        const actual = commentsWithArticleId(comments, articleLookup);
+        const expected = [];
+        expect(actual).to.eql(expected);
+        expect(actual).to.not.equal(comments);
+    })
+    it("returns new array when passed an array of objects and a lookup object ", () => {
+        const comments = [ { article_id: 'Living in the shadow of a great man',
+            author: 'butter_bridge',
+            body: 'This morning, I showered for nine minutes.',
+            votes: 16,
+            created_at: 'Sun, 26 Nov 2000 12:36:03 GMT' } ];
+        const articleLookup = {'Living in the shadow of a great man': 1};
+        const actual = commentsWithArticleId(comments, articleLookup);
+        const expected = [ { article_id: 1,
+            author: 'butter_bridge',
+            body: 'This morning, I showered for nine minutes.',
+            votes: 16,
+            created_at: 'Sun, 26 Nov 2000 12:36:03 GMT' } ];
+        expect(actual).to.eql(expected);
+        expect(actual).to.not.equal(comments);
+    })
 })
