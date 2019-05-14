@@ -1,9 +1,8 @@
 const createRef = (input, key, value) => {
     const refObj = {};
     input.forEach(item => {
-      refObj[key] = item[value];
+      refObj[item[key]] = item[value];
     });
-    console.log(refObj);
     return refObj;
 };
 const createArticleUsername = (articleData, refObj) => {
@@ -13,12 +12,22 @@ const createArticleUsername = (articleData, refObj) => {
   return formattedArticle
 };
 
-const createArticleUsername = (articleData, refObj) => {
+const createArticleTopic = (articleData, refObj) => {
   const formattedArticle = articleData.map(({topic,...articleKeys}) => {
      return {topic: refObj[topic], ...articleKeys}
    });
   return formattedArticle
 };
 
+const formatDate = (input) => {
+  const articleWithTime = input.map(article => {
+    const timestamp = article.created_at;
+    const newArticleObj = article
+    newArticleObj.created_at = new Date(timestamp).toUTCString();
+    console.log(newArticleObj)
+  })
+  return articleWithTime
+}
 
-module.exports = { createRef, createArticleUsername }
+
+module.exports = { createRef, createArticleUsername, createArticleTopic, formatDate }
