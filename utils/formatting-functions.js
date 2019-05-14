@@ -11,20 +11,12 @@ const renameKeys = (input, keyToChange, newKey) => {
     const { [keyToChange]: value, ...restOfInput } = item;
     return { [newKey]: value, ...restOfInput };
   });
-  console.log(newObj);
   return newObj;
 };
 
-const createArticleUsername = (articleData, refObj) => {
-  const formattedArticle = articleData.map(({author,...articleKeys}) => {
-     return {author: refObj[username], ...articleKeys}
-   });
-  return formattedArticle
-};
-
-const createArticleTopic = (articleData, refObj) => {
-  const formattedArticle = articleData.map(({topic,...articleKeys}) => {
-     return {topic: refObj[topic], ...articleKeys}
+const commentsWithArticleId = (articleData, refObj) => {
+  const formattedArticle = articleData.map(({article_id,...articleKeys}) => {
+     return {article_id: refObj[article_id], ...articleKeys}
    });
   return formattedArticle
 };
@@ -40,4 +32,4 @@ const formatDate = (input) => {
 }
 
 
-module.exports = { createRef, createArticleUsername, createArticleTopic, formatDate, renameKeys }
+module.exports = { createRef, commentsWithArticleId, formatDate, renameKeys }
