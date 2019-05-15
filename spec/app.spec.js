@@ -62,7 +62,7 @@ describe("/", () => {
     });
   });
 
-  describe.only("/api/articles", () => {
+  describe("/api/articles", () => {
     it("GET status: 200, and returns a table of articles with all keys and comment count", () => {
       return request(app)
         .get("/api/articles")
@@ -114,6 +114,18 @@ describe("/", () => {
       })
     });  
   });
+
+  describe.only("/api/articles/:article_id ", () => {
+    it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
+      return request(app)
+      .get("/api/articles/1")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body.articles)
+        expect(body.articles).to.have.lengthOf(1)
+      })
+    })
+  })
 
   describe("/api/users", () => {
     it("GET status: 200, and returns a table of articles", () => {

@@ -30,3 +30,13 @@ return connection
       return articles
   })
 }
+
+exports.selectArticleById = (article_id) => {
+  return connection
+    .select("*")
+    .from("article")
+    .where("article_id", article_id)
+    .then(article => {
+      return article
+    })
+}
