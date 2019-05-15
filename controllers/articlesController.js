@@ -6,4 +6,5 @@ console.log("in the topic controller")
   .then(articles => {
       res.status(200).send({ articles })
   })
+  .catch(next)
 }
