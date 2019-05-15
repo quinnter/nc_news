@@ -115,7 +115,7 @@ describe("/", () => {
     });  
   });
 
-  describe("/api/articles/:article_id ", () => {
+  describe.only("/api/articles/:article_id ", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
       .get("/api/articles/1")
@@ -151,7 +151,7 @@ describe("/", () => {
         expect(body.updatedVotes[0].votes).to.eql(110)
       })
     })
-    it.only("PATCH /articles/:article_id - status 200 - responds with updated decremented vote", () => {
+    it("PATCH /articles/:article_id - status 200 - responds with updated decremented vote", () => {
       return request(app)
       .patch("/api/articles/1")
       .send({ inc_votes: -10 })
