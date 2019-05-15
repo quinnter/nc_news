@@ -141,5 +141,15 @@ describe("/", () => {
         expect(body.msg).to.eql("Invalid ID")
       })
     })
+    it.only("PATCH /articles/:article_id - status 201 - responds with updated object", () => {
+      return request(app)
+      .patch("/api/articles/99999999")
+      .send({ inc_votes: 10 })
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.article).to.eql("")
+      })
+    })
   })
+
 });
