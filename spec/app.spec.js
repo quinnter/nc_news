@@ -6,6 +6,10 @@ const request = require("supertest");
 const app = require("../app");
 const connection = require("../db/connection");
 
+const chaiSorted = require("chai-sorted");
+const chai = require("chai");
+chai.use(chaiSorted);
+
 describe("/", () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
