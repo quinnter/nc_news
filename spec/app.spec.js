@@ -10,7 +10,7 @@ describe('/', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
 
-  describe('/api', () => {
+  describe.only('/api', () => {
     it('GET status:200', () => {
       return request(app)
         .get('/api')
@@ -19,9 +19,17 @@ describe('/', () => {
           expect(body.ok).to.equal(true);
         });
     });
+    it("ANY /not_a_route - status:404 - responds with Route Not Found Error", () => {
+      return request(app)
+        .get('/api/not_a_route')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
+    })
   });
 
-  describe.only('/api/topics', () => {
+  describe('/api/topics', () => {
     it('GET status: 200, and returns a table of topics', () => {
       return request(app)
        .get('/api/topics')

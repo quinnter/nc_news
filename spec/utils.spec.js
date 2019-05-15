@@ -101,7 +101,7 @@ describe("renameKeys", () => {
   })
 })
 
-describe.only("commentsWithArticleId", () => {
+describe("commentsWithArticleId", () => {
     it("returns new empty array when passed an empty array ", () => {
         const comments = [];
         const articleLookup = {};
