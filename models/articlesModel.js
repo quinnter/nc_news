@@ -54,6 +54,7 @@ exports.selectArticleById = (article_id) => {
     })
 }
 
-exports.updateArticleVotes = () => {
+exports.updateArticleVotes = (inc_votes) => {
   return connection
+
 }
