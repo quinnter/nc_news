@@ -143,11 +143,12 @@ describe("/", () => {
     })
     it.only("PATCH /articles/:article_id - status 200 - responds with updated object", () => {
       return request(app)
-      .patch("/api/articles/99999999")
+      .patch("/api/articles/1")
       .send({ inc_votes: 10 })
       .expect(200)
       .then(({ body }) => {
-        expect(body.article).to.eql("")
+        console.log(body)
+        expect(body.updatedVotes[0].votes).to.eql(101)
       })
     })
   })

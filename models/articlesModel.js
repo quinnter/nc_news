@@ -54,7 +54,13 @@ exports.selectArticleById = (article_id) => {
     })
 }
 
-exports.updateArticleVotes = (inc_votes) => {
+exports.updateArticleVotes = (article_id, inc_votes) => {
   return connection
-
+  .into("articles")
+  .where("article_id", article_id)
+  .update({'votes': inc_votes})
+  .returning('*')
+  .then(article => {
+    return article
+  })
 }
