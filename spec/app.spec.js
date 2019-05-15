@@ -135,6 +135,14 @@ describe("/", () => {
         )
       }) 
     })
+    it("GET /articles/not_valid_id - status 400 - responds with Invalid ID", () => {
+      return request(app)
+      .get("/api/articles/99999999")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Invalid ID")
+      })
+    })
   })
 
   describe("/api/users", () => {
