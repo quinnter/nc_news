@@ -27,7 +27,7 @@ describe("createRef", () => {
     })
 })
 
-describe("formatDate", () => {
+describe.only("formatDate", () => {
     it("returns an empty array when an empty array is passed", () => {
         const input = [];
         const actual = formatDate(input);
@@ -48,7 +48,7 @@ describe("formatDate", () => {
             topic: 'mitch',
             author: 'butter_bridge',
             body: 'Have you seen the size of that thing?',
-            created_at: 'Tue, 26 Nov 1974 12:21:54 GMT',
+            created_at: new Date(154700514171)
           }];
         expect(actual).to.eql(expected);
     })
