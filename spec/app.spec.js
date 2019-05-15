@@ -105,25 +105,23 @@ describe("/", () => {
         expect(body.articles).to.be.descendingBy("created_at")
       })
     });
-  it("GET /articles?sort_by=not_a_column status: 400, returns Bad Request!", () => {
+  it("GET /articles?sort_by=not_a_column status: 400, returns Undefined Column", () => {
     return request(app)
       .get("/api/articles?sort_by=not_a_column")
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).to.eql("Bad Request!")
+        expect(body.msg).to.eql("Undefined Column")
       })
     });  
   });
 
-  describe.only("/api/articles/:article_id ", () => {
+  describe("/api/articles/:article_id ", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
       .get("/api/articles/1")
       .expect(200)
       .then(({ body }) => {
-        console.log(body)
-        expect(body.article).to.have.lengthOf(1)
-        expect(body.article[0]).to.have.keys(
+        expect(body.article).to.have.keys(
           "article_id",
           "title",
           "body",
@@ -144,24 +142,4 @@ describe("/", () => {
       })
     })
   })
-
-  describe("/api/users", () => {
-    it("GET status: 200, and returns a table of articles", () => {
-      return request(app)
-        .get("/api/users")
-        .expect(200)
-        .then(({ body }) => {
-          expect(body).to.haveOwnProperty("users");
-        });
-    });
-    it("GET status: 200, and returns a single user", () => {
-      return request(app)
-        .get("/api/users/butter_bridge")
-        .expect(200)
-        .then(({ body }) => {
-          expect(body).to.haveOwnProperty("jonny");
-        });
-    });
-  });
-
 });

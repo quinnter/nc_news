@@ -47,7 +47,9 @@ exports.selectArticleById = (article_id) => {
     .leftJoin('comments', 'articles.article_id', '=', 'comments.article_id')
     .groupBy('articles.article_id')
     .where("articles.article_id", article_id)
+    .first()
     .then(article => {
+      if (!article) return Promise.reject({ code: 400 })
       return article
     })
 }
