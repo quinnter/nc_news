@@ -141,16 +141,17 @@ describe("/", () => {
         expect(body.msg).to.eql("Invalid ID")
       })
     })
-    it.only("PATCH /articles/:article_id - status 200 - responds with updated object", () => {
+    it.only("PATCH /articles/:article_id - status 200 - responds with updated incremented object", () => {
       return request(app)
       .patch("/api/articles/1")
       .send({ inc_votes: 10 })
       .expect(200)
       .then(({ body }) => {
         console.log(body)
-        expect(body.updatedVotes[0].votes).to.eql(101)
+        expect(body.updatedVotes[0].votes).to.eql(110)
       })
     })
+    
   })
 
 });
