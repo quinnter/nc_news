@@ -10,7 +10,7 @@ describe('/', () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
 
-  describe.only('/api', () => {
+  describe('/api', () => {
     it('GET status:200', () => {
       return request(app)
         .get('/api')
@@ -38,13 +38,22 @@ describe('/', () => {
     })
   });
 
-  describe('/api/topics', () => {
+  describe.only('/api/topics', () => {
     it('GET status: 200, and returns a table of topics', () => {
       return request(app)
        .get('/api/topics')
        .expect(200)
        .then(({ body }) => {
          expect(body).to.haveOwnProperty("topics")
+       })
+    })
+    it('POST/PUT/DELETE status: 405 - responds with Method Not Allowed', () => {
+      return request(app)
+       .post('/api/topics')
+       .send({"not": "allowed!!!"})
+       .expect(405)
+       .then(({ body }) => {
+        expect(body.msg).to.eql("Method Not Allowed")
        })
     })
   })
