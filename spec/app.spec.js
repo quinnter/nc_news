@@ -62,14 +62,13 @@ describe("/", () => {
     });
   });
 
-  describe.only("/api/articles", () => {
+  describe("/api/articles", () => {
     it("GET status: 200, and returns a table of articles with all keys and comment count", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
         .then(({ body }) => {
           expect(body).to.haveOwnProperty("articles");
-          console.log(body.articles[0])
           expect(body.articles[0]).to.contain.keys(
             "article_id",
             "title",
@@ -81,6 +80,22 @@ describe("/", () => {
             "comment_count"
           );
         });
+    });
+    it.only("GET /articles?sort_by=author status: 200, returns articles by the author param", () => {
+      return request(app)
+        .get("/api/articles?author=icellusedkars")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles[0].author).to.eql("icellusedkars")
+        })
+   });
+   it("GET /articles?sort_by=topic status: 200, returns articles by the topic param", () => {
+    return request(app)
+      .get("/api/articles?sort_by=topic")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articles).to.be.sortedBy("topic")
+      })
     });
   });
 
@@ -102,4 +117,5 @@ describe("/", () => {
         });
     });
   });
+
 });

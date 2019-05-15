@@ -1,8 +1,8 @@
 const connection = require('../db/connection')
 
 exports.selectArticles = ({
-  sort_by = 'created_at' ,
-  order = 'desc',
+  sort_by,
+  order,
   author,
   topic
 }) => {
@@ -25,7 +25,7 @@ return connection
   })
   .leftJoin('comments', 'articles.article_id', '=', 'comments.article_id')
   .groupBy('articles.article_id')
-  .orderBy(sort_by, order)
+  .orderBy(sort_by || "created_at", order || "desc")
   .then(articles => {
       return articles
   })
