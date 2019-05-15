@@ -121,8 +121,8 @@ describe("/", () => {
       .get("/api/articles/1")
       .expect(200)
       .then(({ body }) => {
-        console.log(body.articles)
-        expect(body.articles).to.have.lengthOf(1)
+        console.log(body)
+        expect(body.article).to.have.lengthOf(1)
       })
     })
   })
