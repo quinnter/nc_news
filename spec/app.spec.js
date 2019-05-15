@@ -97,14 +97,22 @@ describe("/", () => {
         expect(body.articles[0].topic).to.eql("mitch")
       })
     });
-    it("GET /articles status: 200, default returns articles sorted by date", () => {
-      return request(app)
-        .get("/api/articles")
-        .expect(200)
-        .then(({ body }) => {
-          expect(body.articles).to.be.descendingBy("created_at")
-        })
-      });
+  it("GET /articles status: 200, default returns articles sorted by date", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articles).to.be.descendingBy("created_at")
+      })
+    });
+  it("GET /articles?not_a_column status: 400, returns Bad Request", () => {
+    return request(app)
+      .get("/api/articles?not_a_column")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Bad Request")
+      })
+    });  
   });
 
   describe("/api/users", () => {
