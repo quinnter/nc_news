@@ -59,22 +59,23 @@ describe("/", () => {
   });
 
   describe.only("/api/articles", () => {
-    it("GET status: 200, and returns a table of articles with all keys", () => {
+    it("GET status: 200, and returns a table of articles with all keys and comment count", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
         .then(({ body }) => {
-          console.log(body.articles[0]);
           expect(body).to.haveOwnProperty("articles");
-          expect(body.articles[0]).to.eql({
-            article_id: 1,
-            title: "Living in the shadow of a great man",
-            body: "I find this existence challenging",
-            votes: 100,
-            topic: "mitch",
-            author: "butter_bridge",
-            created_at: "2018-11-15T12:21:54.171Z"
-          });
+          console.log(body.articles[0])
+          expect(body.articles[0]).to.contain.keys(
+            "article_id",
+            "title",
+            "body",
+            "votes",
+            "topic",
+            "author",
+            "created_at",
+            "comment_count"
+          );
         });
     });
   });
