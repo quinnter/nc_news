@@ -21,13 +21,12 @@ describe('/', () => {
     });
   });
 
-  describe('/api/topics', () => {
+  describe.only('/api/topics', () => {
     it('GET status: 200, and returns a table of topics', () => {
       return request(app)
        .get('/api/topics')
        .expect(200)
        .then(({ body }) => {
-         console.log(body)
          expect(body).to.haveOwnProperty("topics")
        })
     })
@@ -39,7 +38,6 @@ describe('/', () => {
        .get('/api/articles')
        .expect(200)
        .then(({ body }) => {
-         console.log(body)
          expect(body).to.haveOwnProperty("articles")
        })
     })
@@ -52,7 +50,6 @@ describe('/', () => {
        .get('/api/users')
        .expect(200)
        .then(({ body }) => {
-         console.log(body)
          expect(body).to.haveOwnProperty("users")
        })
     })
@@ -61,9 +58,9 @@ describe('/', () => {
        .get('/api/users/butter_bridge')
        .expect(200)
        .then(({ body }) => {
-         console.log(body)
          expect(body).to.haveOwnProperty("jonny")
        })
     })
   })
+
 });
