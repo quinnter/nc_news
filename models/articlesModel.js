@@ -1,6 +1,11 @@
 const connection = require('../db/connection')
 
-exports.selectArticles = () => {
+exports.selectArticles = ({
+  sort_by = 'created_at' ,
+  order = 'desc',
+  author,
+  topic
+}) => {
 console.log('in the article model')
 return connection
   .select(
@@ -14,8 +19,13 @@ return connection
   )
   .count('comments.article_id as comment_count')
   .from('articles')
+  .modify(query => {
+    if (author) query.where("articles.author", author)
+    if (topic) query.where("articles.topic", topic)
+  })
   .leftJoin('comments', 'articles.article_id', '=', 'comments.article_id')
   .groupBy('articles.article_id')
+  .orderBy(sort_by, order)
   .then(articles => {
       return articles
   })
