@@ -30,7 +30,6 @@ exports.seed = (knex, Promise) => {
       const commentsWithArticle = renameKeys(commentsWithAuthorKey, "belongs_to", "article_id")
       const articleLookup = createRef(insertedArticles, "title", "article_id")
       const completedComments = commentsWithArticleId(commentsWithArticle, articleLookup)
-      console.log(articleLookup)
       return knex
       .insert(completedComments)
       .into('comments')
