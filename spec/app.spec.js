@@ -27,6 +27,15 @@ describe('/', () => {
           expect(body.msg).to.eql("Route Not Found")
         })
     })
+    it("ANY /api - status:405 - responds with Method Not Allowed", () => {
+      return request(app)
+        .post('/api')
+        .send({"not": "allowed"})
+        .expect(405)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Method Not Allowed")
+        })
+    })
   });
 
   describe('/api/topics', () => {
