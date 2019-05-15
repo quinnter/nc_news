@@ -123,6 +123,16 @@ describe("/", () => {
       .then(({ body }) => {
         console.log(body)
         expect(body.article).to.have.lengthOf(1)
+        expect(body.article[0]).to.have.keys(
+          "article_id",
+          "title",
+          "body",
+          "votes",
+          "topic",
+          "author",
+          "created_at",
+          "comment_count"
+        )
       }) 
     })
   })
