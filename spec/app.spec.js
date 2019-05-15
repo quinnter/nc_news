@@ -123,7 +123,7 @@ describe("/", () => {
       .then(({ body }) => {
         console.log(body)
         expect(body.article).to.have.lengthOf(1)
-      })
+      }) 
     })
   })
 
