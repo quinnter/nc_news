@@ -1,4 +1,4 @@
-const { selectArticles, selectArticleById } = require("../models/articlesModel")
+const { selectArticles, selectArticleById, updateArticleVotes } = require("../models/articlesModel")
 
 exports.getArticles = (req, res, next) => {
   selectArticles(req.query)
@@ -15,4 +15,8 @@ exports.getArticleById = (req, res, next) => {
     res.status(200).send({ article })
   })
   .catch(next)
+}
+
+exports.patchArticleById = (req, res, next) => {
+ updateArticleVotes()
 }
