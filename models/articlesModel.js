@@ -33,9 +33,20 @@ return connection
 
 exports.selectArticleById = (article_id) => {
   return connection
-    .select("*")
+    .select(  
+    'articles.article_id',
+    'articles.title',
+    'articles.topic',
+    'articles.author',
+    'articles.created_at',
+    'articles.votes',
+    'articles.body'
+    )
+    .count('comments.article_id as comment_count')
     .from("articles")
-    .where("article_id", article_id)
+    .leftJoin('comments', 'articles.article_id', '=', 'comments.article_id')
+    .groupBy('articles.article_id')
+    .where("articles.article_id", article_id)
     .then(article => {
       return article
     })
