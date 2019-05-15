@@ -27,7 +27,7 @@ describe("createRef", () => {
     })
 })
 
-describe.only("formatDate", () => {
+describe("formatDate", () => {
     it("returns an empty array when an empty array is passed", () => {
         const input = [];
         const actual = formatDate(input);
