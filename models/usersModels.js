@@ -10,7 +10,7 @@ return connection
   })
 }
 
-exports.selectUser = () => {
-return connection
-  .select('')
-}
+// exports.selectUser = () => {
+// return connection
+//   .select('')
+// }

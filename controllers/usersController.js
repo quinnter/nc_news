@@ -8,10 +8,10 @@ console.log("in the user controller")
   })
 }
 
-exports.getUser = (req, res, next) => {
-  console.log(req.params)
-    selectUser(req.query)
-  .then(user => {
-      res.status(200).send({ user })
-  })
-}
+// exports.getUser = (req, res, next) => {
+//   console.log(req.params)
+//     selectUser(req.query)
+//   .then(user => {
+//       res.status(200).send({ user })
+//   })
+// }
