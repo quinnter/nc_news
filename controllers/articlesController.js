@@ -1,4 +1,10 @@
-const { selectArticles, selectArticleById, updateArticleVotes, selectArticleComments } = require("../models/articlesModel")
+const { 
+  selectArticles, 
+  selectArticleById, 
+  updateArticleVotes, 
+  selectArticleComments, 
+  insertArticleComment 
+} = require("../models/articlesModel")
 
 exports.getArticles = (req, res, next) => {
   selectArticles(req.query)
@@ -35,4 +41,8 @@ exports.getArticleComments = (req, res, next) => {
     res.status(200).send({ articleComments })
   })
   .catch(next)
+}
+
+exports.postArticleComment = (req, res, next) => {
+  insertArticleComment()
 }

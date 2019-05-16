@@ -82,3 +82,7 @@ exports.selectArticleComments = (article_id, sort_by, order) => {
     return articleComments
   })
 }
+
+exports.insertArticleComment = () => {
+  
+}

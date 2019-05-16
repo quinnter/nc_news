@@ -15,5 +15,6 @@ articlesRouter.route("/:article_id")
 
 articlesRouter.route("/:article_id/comments")
 .get(getArticleComments)
+.post(postArticleComment)
 
 module.exports = articlesRouter
