@@ -83,6 +83,9 @@ exports.selectArticleComments = (article_id, sort_by, order) => {
   })
 }
 
-exports.insertArticleComment = () => {
-  
+exports.insertArticleComment = ( newCommentKeys ) => {
+  return connection
+  .into("comments")
+  .insert(newCommentKeys)
+  .returning('*')
 }

@@ -226,6 +226,24 @@ describe("/", () => {
         expect(body.articleComments).to.be.ascendingBy("created_at")
       })
     })
+    it("POST /:article_id/comments - status 201 - returns new comment with all keys ", () => {
+      return request(app)
+      .post("/api/articles/1/comments")
+      .send({
+        username: "icellusedkars",
+        body: "I enjoyed this content very much"
+      })
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.newComment[0]).to.have.keys(
+          "comment_id",
+          "votes",
+          "created_at",
+          "author",
+          "body"
+        )
+      })
+    })
   })
 
 });
