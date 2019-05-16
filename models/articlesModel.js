@@ -48,7 +48,7 @@ exports.selectArticleById = (article_id) => {
     .where("articles.article_id", article_id)
     .first()
     .then(article => {
-      if (!article) return Promise.reject({ code: 400 })
+      if (!article) return Promise.reject({ code: '22P02' })
       return article
     })
 }
@@ -76,5 +76,9 @@ exports.selectArticleComments = (article_id) => {
   )
   .from("comments")
   .where({ article_id })
-  .returning('*')
+  .then(articleComments => {
+    console.log(articleComments)
+    if (!articleComments.length) return Promise.reject({ code: '22P02' })
+    return articleComments
+  })
 }

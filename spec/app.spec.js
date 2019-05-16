@@ -133,13 +133,13 @@ describe("/", () => {
         )
       }) 
     })
-    it("GET /articles/not_valid_id - status 400 - responds with Bad Request", () => {
+    it("GET /articles/not_valid_id - status 400 - responds with Invalid ID", () => {
       return request(app)
       .get("/api/articles/99999999")
       .expect(400)
       .then(({ body }) => {
         console.log(body.msg)
-        expect(body.msg).to.eql("Bad Request")
+        expect(body.msg).to.eql("Invalid ID")
       })
     })
     it("PATCH /articles/:article_id - status 200 - responds with updated incremented vote", () => {
@@ -176,7 +176,6 @@ describe("/", () => {
       .get("/api/articles/1/comments")
       .expect(200)
       .then(({ body }) => {
-        console.log(body.articleComments[0])
         expect(body.articleComments[0]).to.have.keys(
           "comment_id",
           "votes",
@@ -184,6 +183,14 @@ describe("/", () => {
           "author",
           "body"
         )
+      })
+    })
+    it("GET /invalid_article/comments - status 400 - returns with Invalid ID", () => {
+      return request(app)
+      .get("/api/articles/99999999/comments")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Invalid ID")
       })
     })
   })
