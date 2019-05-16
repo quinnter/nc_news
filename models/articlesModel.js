@@ -87,5 +87,8 @@ exports.insertArticleComment = ( newCommentKeys ) => {
   return connection
   .into("comments")
   .insert(newCommentKeys)
-  .returning('*')
+  .then(newComment => {
+    if (!newComment) return Promise.reject({ code : '23503'})
+    else return newComment
+  })
 }

@@ -265,14 +265,13 @@ describe("/", () => {
         expect(body.msg).to.eql("Key Violation")
       })
     })
-    it("POST /:article_id/comments - status 400 - responds with Key Violation", () => {
+    it("POST /:article_id/comments - status 400 - responds with Cannot Be Null", () => {
       return request(app)
       .post("/api/articles/1/comments")
       .send({ wrong: "input" })
       .expect(400)
       .then(({ body }) => {
-        console.log(body)
-        expect(body.msg).to.eql("Key Violation")
+        expect(body.msg).to.eql("Cannot Be Null")
       })
     })
   })
