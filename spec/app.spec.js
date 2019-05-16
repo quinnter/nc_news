@@ -287,6 +287,23 @@ describe("/", () => {
         expect(body.comment[0].votes).to.eql(26)
       })
     })
+    it("PATCH /comments/:comment_id - status 404 - responds with Route Not Found", () => {
+      return request(app)
+      .patch("/api/comments/999999")
+      .send({ inc_votes: -2})
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Route Not Found")
+      })
+    })
+    it("PATCH /comments/:comment_id - status 400 - responds with Invalid ID", () => {
+      return request(app)
+      .patch("/api/comments/1")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Invalid ID")
+      })
+    })
   })
 
 });
