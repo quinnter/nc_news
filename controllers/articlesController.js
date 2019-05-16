@@ -50,7 +50,8 @@ exports.postArticleComment = (req, res, next) => {
   const newCommentKeys = { article_id, author: username, body }
   insertArticleComment(newCommentKeys)
   .then(newComment => {
-    res.status(201).send({ newComment })
+    if (!newComment) return Promise.reject({ code : '23503'})
+     else res.status(201).send({ newComment })
   })
   .catch(next)
 }
