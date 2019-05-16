@@ -133,7 +133,7 @@ describe("/", () => {
         )
       }) 
     })
-    it.only("GET /articles/not_valid_id - status 404 - responds with Invalid ID", () => {
+    it("GET /articles/not_valid_id - status 404 - responds with Invalid ID", () => {
       return request(app)
       .get("/api/articles/99999999")
       .expect(404)
@@ -160,7 +160,7 @@ describe("/", () => {
         expect(body.updatedVotes[0].votes).to.eql(90)
       })
     })
-    it.only("PATCH /articles/:article_id - status 404 - responds with Route Not Found", () => {
+    it("PATCH /articles/:article_id - status 404 - responds with Route Not Found", () => {
       return request(app)
       .patch("/api/articles/999999")
       .send({ inc_votes: -2})
@@ -169,7 +169,7 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
     })
-    it.only("PATCH /articles/:article_id - status 400 - responds with Invalid ID", () => {
+    it("PATCH /articles/:article_id - status 400 - responds with Invalid ID", () => {
       return request(app)
       .patch("/api/articles/1")
       .expect(400)
@@ -177,15 +177,15 @@ describe("/", () => {
         expect(body.msg).to.eql("Invalid ID")
       })
     })
-    // it.only("GET /articles/wrong_value_type - status 404 - responds with Route Not Found", () => {
-    //   return request(app)
-    //   .get("/api/articles/not_a_number")
-    //   .expect(404)
-    //   .then(({ body }) => {
-    //     console.log(body.msg)
-    //     expect(body.msg).to.eql("Route Not Found")
-    //   })
-    // }) 
+    it("GET /articles/wrong_value_type - status 400 - responds with Invalid ID", () => {
+      return request(app)
+      .get("/api/articles/not_a_number")
+      .expect(400)
+      .then(({ body }) => {
+        console.log(body.msg)
+        expect(body.msg).to.eql("Invalid ID")
+      })
+    }) 
   })
 
   describe("/api/articles/:article_id/comments", () => {
@@ -203,7 +203,7 @@ describe("/", () => {
         )
       })
     })
-    it.only("GET /invalid_article/comments - status 400 - returns with Route Not Found", () => {
+    it("GET /invalid_article/comments - status 400 - returns with Route Not Found", () => {
       return request(app)
       .get("/api/articles/99999999/comments")
       .expect(404)
