@@ -1,8 +1,10 @@
 const { selectEndPoints } = require("../models/apiModels")
 
 exports.getEndPoints = (req, res, next) => {
-    selectEndPoints()
-    .then(endpoints => {
-        res.status(200).send({ endpoints })
-    })
+    // selectEndPoints(req.query)
+    // .then(endpoints => {
+    //     res.status(200).send({ endpoints })
+    // })
+    // .catch(next)
+    console.log("in controller")
 }
