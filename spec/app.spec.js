@@ -303,6 +303,14 @@ describe("/", () => {
         expect(body.msg).to.eql("Invalid ID")
       })
     })
+    it("DELETE /comments/:comment_id - status 204 - deletes specified comment", () => {
+      return request(app)
+      .delete("/api/comments/2")
+      .expect(204)
+      .then(({ body }) => {
+        expect(body).to.eql({})
+      })
+    })
   })
 
 });

@@ -1,4 +1,4 @@
-const { updateCommentVotes } = require("../models/commentsModel")
+const { updateCommentVotes, removeCommentById } = require("../models/commentsModel")
 
 exports.patchCommentById = (req, res, next) => {
    const { comment_id } = req.params
@@ -8,4 +8,16 @@ exports.patchCommentById = (req, res, next) => {
         res.status(201).send({ comment })
     })
     .catch(next)
+}
+
+exports.deleteCommentById = (req, res, next) => {
+  const { comment_id } = req.params
+    removeCommentById(comment_id)
+    .then(result => {
+      console.log(result)
+        res.sendStatus(204)
+    })
+    .catch(err => {
+        console.log(err)
+    })
 }
