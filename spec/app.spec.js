@@ -115,7 +115,7 @@ describe("/", () => {
     });  
   });
 
-  describe.only("/api/articles/:article_id ", () => {
+  describe("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
       .get("/api/articles/1")
@@ -166,6 +166,23 @@ describe("/", () => {
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).to.eql("Invalid ID")
+      })
+    })
+  })
+
+  describe.only("/api/articles/:article_id/comments", () => {
+    it("GET /:article_id/comments - status 200 - returns", () => {
+      return request(app)
+      .get("/api/articles/:article_id/comments")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.comments).to.have.keys(
+          "comment_id",
+          "votes",
+          "created_at",
+          "author",
+          "body"
+        )
       })
     })
   })
