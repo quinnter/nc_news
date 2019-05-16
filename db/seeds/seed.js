@@ -5,12 +5,12 @@ exports.seed = (knex, Promise) => {
   return knex.migrate
     .rollback()
     .then(() => knex.migrate.latest())
-    // .then(() => {
-    //   return knex
-    //   .insert(data.endPointsData)
-    //   .into('endpoints')
-    //   .returning('*')
-    // })
+    .then(() => {
+      return knex
+      .insert(data.endPointsData)
+      .into('endpoints')
+      .returning('*')
+    })
     .then(() => {
       return knex
       .insert(data.topicsData)
