@@ -311,6 +311,14 @@ describe("/", () => {
         expect(body).to.eql({})
       })
     })
+    it("DELETE /comments/:not_valid_id - status 404 - when comment ID doesnt exist", () => {
+      return request(app)
+      .delete("/api/comments/999999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Route Not Found")
+      })
+    })
   })
 
 });

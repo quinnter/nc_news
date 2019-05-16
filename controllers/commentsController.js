@@ -14,10 +14,8 @@ exports.deleteCommentById = (req, res, next) => {
   const { comment_id } = req.params
     removeCommentById(comment_id)
     .then(result => {
-      console.log(result)
-        res.sendStatus(204)
+       if (result === 1) res.sendStatus(204)
+       else return Promise.reject({ code: 404 })  
     })
-    .catch(err => {
-        console.log(err)
-    })
+    .catch(next)
 }
