@@ -281,9 +281,10 @@ describe("/", () => {
       return request(app)
       .patch("/api/comments/1")
       .send({ inc_votes: 10 })
-      .expect(200)
+      .expect(201)
       .then(({ body }) => {
-        expect(body.updatedVotes[0].votes).to.eql(10)
+        console.log(body)
+        expect(body.comment[0].votes).to.eql(26)
       })
     })
   })
