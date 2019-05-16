@@ -48,7 +48,7 @@ exports.selectArticleById = (article_id) => {
     .where("articles.article_id", article_id)
     .first()
     .then(article => {
-      if (!article) return Promise.reject({ code: '22P02' })
+      if (!article) return Promise.reject({ code : 404 })
       return article
     })
 }
@@ -78,7 +78,7 @@ exports.selectArticleComments = (article_id, sort_by, order) => {
   .where({ article_id })
   .orderBy(sort_by || "created_at", order || "desc")
   .then(articleComments => {
-    if (!articleComments.length) return Promise.reject({ code: '22P02' })
+    if (!articleComments.length) return Promise.reject({ code : 404 })
     return articleComments
   })
 }

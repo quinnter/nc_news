@@ -138,8 +138,7 @@ describe("/", () => {
       .get("/api/articles/99999999")
       .expect(400)
       .then(({ body }) => {
-        console.log(body.msg)
-        expect(body.msg).to.eql("Invalid ID")
+        expect(body.msg).to.eql("Route Not Found")
       })
     })
     it("PATCH /articles/:article_id - status 200 - responds with updated incremented vote", () => {
@@ -179,7 +178,7 @@ describe("/", () => {
     // }) 
   })
 
-  describe.only("/api/articles/:article_id/comments", () => {
+  describe("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
@@ -194,12 +193,12 @@ describe("/", () => {
         )
       })
     })
-    it("GET /invalid_article/comments - status 400 - returns with Invalid ID", () => {
+    it("GET /invalid_article/comments - status 400 - returns with Route Not Found", () => {
       return request(app)
       .get("/api/articles/99999999/comments")
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).to.eql("Invalid ID")
+        expect(body.msg).to.eql("Route Not Found")
       })
     })
     it("GET /:article_id/comments - status 200 - default returns comments sorted by date ", () => {
