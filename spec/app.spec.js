@@ -182,13 +182,12 @@ describe("/", () => {
       .get("/api/articles/not_a_number")
       .expect(400)
       .then(({ body }) => {
-        console.log(body.msg)
         expect(body.msg).to.eql("Invalid ID")
       })
     }) 
   })
 
-  describe("/api/articles/:article_id/comments", () => {
+  describe.only("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
@@ -208,7 +207,6 @@ describe("/", () => {
       .get("/api/articles/99999999/comments")
       .expect(404)
       .then(({ body }) => {
-        console.log(body)
         expect(body.msg).to.eql("Route Not Found")
       })
     })
@@ -250,8 +248,31 @@ describe("/", () => {
           "votes",
           "created_at",
           "author",
+          "article_id",
           "body"
         )
+      })
+    })
+    it("POST /not_an_id/comments - status 400 - responds with Key Violation", () => {
+      return request(app)
+      .post("/api/articles/999999/comments")
+      .send({
+        username: "icellusedkars",
+        body: "I enjoyed this content very much"
+      })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Key Violation")
+      })
+    })
+    it("POST /:article_id/comments - status 400 - responds with Key Violation", () => {
+      return request(app)
+      .post("/api/articles/1/comments")
+      .send({ wrong: "input" })
+      .expect(400)
+      .then(({ body }) => {
+        console.log(body)
+        expect(body.msg).to.eql("Key Violation")
       })
     })
   })

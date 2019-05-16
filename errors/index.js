@@ -20,7 +20,8 @@ exports.handle400 = (err, req, res, next) => {
   const codes = { 
     // 400: "Bad Request", 
     '42703': "Undefined Column",
-    '22P02': "Invalid ID"  
+    '22P02': "Invalid ID",
+    '23503': "Key Violation"  
   }
   if (codes[err.code]) res.status(400).send({msg: codes[err.code]})
   else next(err);

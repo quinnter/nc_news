@@ -54,14 +54,12 @@ exports.selectArticleById = (article_id) => {
 }
 
 exports.updateArticleVotes = (article_id, inc_votes) => {
-  console.log("helloooo")
   return connection
   .into("articles")
   .where("article_id", article_id)
   .increment({'votes': inc_votes})
   .returning('*')
   .then(article => {
-    console.log(article)
     if (article.length === 0) return Promise.reject({ code: 404})
     else return article
   })
