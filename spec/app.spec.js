@@ -133,12 +133,13 @@ describe("/", () => {
         )
       }) 
     })
-    it("GET /articles/not_valid_id - status 400 - responds with Invalid ID", () => {
+    it("GET /articles/not_valid_id - status 400 - responds with Bad Request", () => {
       return request(app)
       .get("/api/articles/99999999")
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).to.eql("Invalid ID")
+        console.log(body.msg)
+        expect(body.msg).to.eql("Bad Request")
       })
     })
     it("PATCH /articles/:article_id - status 200 - responds with updated incremented vote", () => {

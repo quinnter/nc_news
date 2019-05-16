@@ -12,7 +12,7 @@ exports.handle500 = (err, req, res, next) => {
 
 exports.handle400 = (err, req, res, next) => {
   const codes = { 
-    400: "Invalid ID", 
+    400: "Bad Request", 
     '42703': "Undefined Column",
     '22P02': "Invalid ID"  
   }
