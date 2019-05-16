@@ -1,7 +1,6 @@
 const connection = require('../db/connection')
 
 exports.selectUsers = () => {
-console.log('in the users model')
 return connection
   .select('*')
   .from('users')
@@ -10,7 +9,14 @@ return connection
   })
 }
 
-// exports.selectUser = () => {
-// return connection
-//   .select('')
-// }
+exports.selectUser = (username) => {
+return connection
+  .select('*')
+  .from("users")
+  .where({ username })
+  .first()
+  .then(user => {
+    if (!user) return Promise.reject({ code: 404 })
+    return user
+  })
+}

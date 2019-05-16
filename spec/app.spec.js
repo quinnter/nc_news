@@ -202,7 +202,7 @@ describe("/", () => {
         )
       })
     })
-    it("GET /invalid_article/comments - status 400 - returns with Route Not Found", () => {
+    it("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
       return request(app)
       .get("/api/articles/99999999/comments")
       .expect(404)
@@ -276,7 +276,7 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/comments/:comment_id", () => {
+  describe("/api/comments/:comment_id", () => {
     it("PATCH /comments/:comment_id - status 201 - returns comments with updated votes", () => {
       return request(app)
       .patch("/api/comments/1")
@@ -295,7 +295,7 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
     })
-    it("PATCH /comments/:comment_id - status 400 - responds with Invalid ID", () => {
+    it("PATCH /comments/:comment_id - status 400 - when patch send is invalid responds with Invalid ID", () => {
       return request(app)
       .patch("/api/comments/1")
       .expect(400)
@@ -314,6 +314,25 @@ describe("/", () => {
     it("DELETE /comments/:not_valid_id - status 404 - when comment ID doesnt exist", () => {
       return request(app)
       .delete("/api/comments/999999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Route Not Found")
+      })
+    })
+  })
+
+  describe.only("/api/users", () => {
+    it("GET /:username - status 200 - returns the specific user object that matches username", () => {
+      return request(app)
+      .get("/api/users/icellusedkars")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user.username).to.eql("icellusedkars")
+      })
+    })
+    it("GET /:username - status 404 - when user does not exist responds with ", () => {
+      return request(app)
+      .get("/api/users/icellusedkarsss")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).to.eql("Route Not Found")
