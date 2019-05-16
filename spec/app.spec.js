@@ -138,7 +138,6 @@ describe("/", () => {
       .get("/api/articles/99999999")
       .expect(404)
       .then(({ body }) => {
-        console.log(body)
         expect(body.msg).to.eql("Route Not Found")
       })
     })
@@ -321,7 +320,7 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/users", () => {
+  describe("/api/users", () => {
     it("GET /:username - status 200 - returns the specific user object that matches username", () => {
       return request(app)
       .get("/api/users/icellusedkars")
