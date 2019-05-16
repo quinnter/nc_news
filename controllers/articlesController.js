@@ -26,3 +26,7 @@ exports.patchArticleById = (req, res, next) => {
   })
   .catch(next)
 }
+
+exports.getArticleComments = (req, res, next) => {
+  selectArticleComments()
+}

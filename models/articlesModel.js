@@ -64,3 +64,7 @@ exports.updateArticleVotes = (article_id, inc_votes) => {
     return article
   })
 }
+
+exports.selectArticleComments = () => {
+  
+}
