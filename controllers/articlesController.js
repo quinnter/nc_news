@@ -28,5 +28,12 @@ exports.patchArticleById = (req, res, next) => {
 }
 
 exports.getArticleComments = (req, res, next) => {
-  selectArticleComments()
+  const { article_id } = req.params
+  selectArticleComments(article_id)
+  .then(articleComments => {
+    res.status(200).send({ articleComments })
+  })
+  .catch(err => {
+    console.log(err)
+  })
 }

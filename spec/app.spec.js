@@ -173,7 +173,7 @@ describe("/", () => {
   describe.only("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
-      .get("/api/articles/:article_id/comments")
+      .get("/api/articles/1/comments")
       .expect(200)
       .then(({ body }) => {
         expect(body.comments).to.have.keys(
