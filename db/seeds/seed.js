@@ -7,7 +7,9 @@ exports.seed = (knex, Promise) => {
     .then(() => knex.migrate.latest())
     .then(() => {
       return knex
-      .insert()
+      .insert(data.endPointsData)
+      .into('endpoints')
+      .returning('*')
     })
     .then(() => {
       return knex
