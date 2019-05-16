@@ -29,7 +29,8 @@ exports.patchArticleById = (req, res, next) => {
 
 exports.getArticleComments = (req, res, next) => {
   const { article_id } = req.params
-  selectArticleComments(article_id)
+  const { sort_by, order } = req.query
+  selectArticleComments(article_id, sort_by, order)
   .then(articleComments => {
     res.status(200).send({ articleComments })
   })

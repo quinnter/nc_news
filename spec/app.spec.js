@@ -168,6 +168,15 @@ describe("/", () => {
         expect(body.msg).to.eql("Invalid ID")
       })
     })
+    // it.only("GET /articles/wrong_value_type - status 404 - responds with Route Not Found", () => {
+    //   return request(app)
+    //   .get("/api/articles/not_a_number")
+    //   .expect(404)
+    //   .then(({ body }) => {
+    //     console.log(body.msg)
+    //     expect(body.msg).to.eql("Route Not Found")
+    //   })
+    // }) 
   })
 
   describe.only("/api/articles/:article_id/comments", () => {
@@ -191,6 +200,30 @@ describe("/", () => {
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).to.eql("Invalid ID")
+      })
+    })
+    it("GET /:article_id/comments - status 200 - default returns comments sorted by date ", () => {
+      return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articleComments).to.be.descendingBy("created_at")
+      })
+    })
+    it("GET /:article_id/comments?sort_by=votes - status 200 - returns comments sorted by votes ", () => {
+      return request(app)
+      .get("/api/articles/1/comments?sort_by=votes")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articleComments).to.be.descendingBy("votes")
+      })
+    })
+    it("GET /:article_id/comments?order=asc - status 200 - returns comments sorted ascendingly ", () => {
+      return request(app)
+      .get("/api/articles/1/comments?order=asc")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articleComments).to.be.ascendingBy("created_at")
       })
     })
   })

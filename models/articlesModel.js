@@ -65,7 +65,7 @@ exports.updateArticleVotes = (article_id, inc_votes) => {
   })
 }
 
-exports.selectArticleComments = (article_id) => {
+exports.selectArticleComments = (article_id, sort_by, order) => {
   return connection
   .select(
     'comments.comment_id',
@@ -76,8 +76,8 @@ exports.selectArticleComments = (article_id) => {
   )
   .from("comments")
   .where({ article_id })
+  .orderBy(sort_by || "created_at", order || "desc")
   .then(articleComments => {
-    console.log(articleComments)
     if (!articleComments.length) return Promise.reject({ code: '22P02' })
     return articleComments
   })
