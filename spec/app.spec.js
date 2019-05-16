@@ -283,7 +283,6 @@ describe("/", () => {
       .send({ inc_votes: 10 })
       .expect(201)
       .then(({ body }) => {
-        console.log(body)
         expect(body.comment[0].votes).to.eql(26)
       })
     })
