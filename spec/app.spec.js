@@ -14,13 +14,18 @@ describe("/", () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
 
-  describe("/api", () => {
+  describe.only("/api", () => {
     it("GET status:200", () => {
       return request(app)
         .get("/api")
         .expect(200)
         .then(({ body }) => {
-          expect(body.ok).to.equal(true);
+          expect(body).to.eql({
+            'topics': 'find interest things to read about',
+            'articles': 'people wrote these things',
+            'comments': 'the voices of the people',
+            'users': 'a list of those fine people'
+          });
         });
     });
     it("ANY /not_a_route - status:404 - responds with Route Not Found Error", () => {
