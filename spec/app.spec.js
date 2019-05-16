@@ -20,11 +20,11 @@ describe("/", () => {
         .get("/api")
         .expect(200)
         .then(({ body }) => {
-          expect(body).to.eql({
-            'topics': 'find interest things to read about',
-            'articles': 'people wrote these things',
-            'comments': 'the voices of the people',
-            'users': 'a list of those fine people'
+          expect(body.endpoints[0]).to.eql({
+            'topics': 'these are topics',
+            'articles': 'these are articles',
+            'comments': 'these are comments',
+            'users': 'these are users'
           });
         });
     });
