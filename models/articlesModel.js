@@ -6,7 +6,6 @@ exports.selectArticles = ({
   author,
   topic
 }) => {
-console.log('in the article model')
 return connection
   .select(
   'articles.article_id',
@@ -56,6 +55,7 @@ exports.selectArticleById = (article_id) => {
 
 exports.updateArticleVotes = (article_id, inc_votes) => {
   return connection
+
   .into("articles")
   .where("article_id", article_id)
   .increment({'votes': inc_votes})
@@ -65,6 +65,16 @@ exports.updateArticleVotes = (article_id, inc_votes) => {
   })
 }
 
-exports.selectArticleComments = () => {
-  
+exports.selectArticleComments = (article_id) => {
+  return connection
+  .select(
+    'comments.comment_id',
+    'comments.votes',
+    'comments.created_at',
+    'comments.author',
+    'comments.body'
+  )
+  .from("comments")
+  .where({ article_id })
+  .returning('*')
 }

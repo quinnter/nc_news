@@ -176,7 +176,8 @@ describe("/", () => {
       .get("/api/articles/1/comments")
       .expect(200)
       .then(({ body }) => {
-        expect(body.comments).to.have.keys(
+        console.log(body.articleComments[0])
+        expect(body.articleComments[0]).to.have.keys(
           "comment_id",
           "votes",
           "created_at",

@@ -1,4 +1,4 @@
-const { selectArticles, selectArticleById, updateArticleVotes } = require("../models/articlesModel")
+const { selectArticles, selectArticleById, updateArticleVotes, selectArticleComments } = require("../models/articlesModel")
 
 exports.getArticles = (req, res, next) => {
   selectArticles(req.query)
@@ -33,7 +33,5 @@ exports.getArticleComments = (req, res, next) => {
   .then(articleComments => {
     res.status(200).send({ articleComments })
   })
-  .catch(err => {
-    console.log(err)
-  })
+  .catch(next)
 }
