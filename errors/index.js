@@ -11,7 +11,11 @@ exports.handle500 = (err, req, res, next) => {
 };
 
 exports.handle400 = (err, req, res, next) => {
-  const codes = { 400: "Invalid ID", '42703': "Undefined Column" }
+  const codes = { 
+    400: "Invalid ID", 
+    '42703': "Undefined Column",
+    '22P02': "Invalid ID"  
+  }
   if (codes[err.code]) res.status(400).send({msg: codes[err.code]})
   else next(err);
 }

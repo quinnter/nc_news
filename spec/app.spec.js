@@ -147,7 +147,6 @@ describe("/", () => {
       .send({ inc_votes: 10 })
       .expect(200)
       .then(({ body }) => {
-        console.log(body)
         expect(body.updatedVotes[0].votes).to.eql(110)
       })
     })
@@ -157,8 +156,15 @@ describe("/", () => {
       .send({ inc_votes: -10 })
       .expect(200)
       .then(({ body }) => {
-        console.log(body)
         expect(body.updatedVotes[0].votes).to.eql(90)
+      })
+    })
+    it("PATCH /articles/:article_id - status 400 - responds with Invalid ID", () => {
+      return request(app)
+      .patch("/api/articles/999999")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Invalid ID")
       })
     })
   })
