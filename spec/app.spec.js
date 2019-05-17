@@ -138,6 +138,15 @@ describe("/", () => {
       .then(({ body }) => {
         expect(body.articles).to.be.descendingBy("created_at")
       })
+    });
+    it("PATCH /api/articles - status: 405 - responds with Method Not Allowed", () => {
+      return request(app)
+        .patch("/api/articles")
+        .send({ not: "allowed" })
+        .expect(405)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Method Not Allowed");
+        });
     }); 
   // it("GET /articles?author= status: 400, returns Invalid ID", () => {
   //   return request(app)
