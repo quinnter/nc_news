@@ -123,6 +123,14 @@ describe("/", () => {
         expect(body.msg).to.eql("Undefined Column")
       })
     }); 
+    it("GET /articles?order=asc: status: 200, order is ascending", () => {
+      return request(app)
+        .get("/api/articles?order=asc")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.ascendingBy("article_id")
+        })
+      }); 
   it("GET /articles?order=not_an_order: status: 200, defaults to desc", () => {
     return request(app)
       .get("/api/articles?order=not_an_order")
