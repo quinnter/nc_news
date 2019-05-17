@@ -37,8 +37,8 @@ exports.getArticleComments = (req, res, next) => {
   const { article_id } = req.params
   const { sort_by, order } = req.query
   selectArticleComments(article_id, sort_by, order)
-  .then(articleComments => {
-    res.status(200).send({ articleComments })
+  .then(comments => {
+    res.status(200).send({ comments })
   })
   .catch(next)
 }

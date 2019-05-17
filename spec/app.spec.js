@@ -157,7 +157,7 @@ describe("/", () => {
   //  });
   });
 
-  describe.only("/api/articles/:article_id", () => {
+  describe("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
       .get("/api/articles/1")
@@ -246,13 +246,13 @@ describe("/", () => {
     })
   })
 
-  describe("/api/articles/:article_id/comments", () => {
+  describe.only("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
       .expect(200)
       .then(({ body }) => {
-        expect(body.articleComments[0]).to.have.keys(
+        expect(body.comments[0]).to.have.keys(
           "comment_id",
           "votes",
           "created_at",
@@ -274,7 +274,7 @@ describe("/", () => {
       .get("/api/articles/1/comments")
       .expect(200)
       .then(({ body }) => {
-        expect(body.articleComments).to.be.descendingBy("created_at")
+        expect(body.comments).to.be.descendingBy("created_at")
       })
     })
     it("GET /:article_id/comments?sort_by=votes - status 200 - returns comments sorted by votes ", () => {
@@ -282,7 +282,7 @@ describe("/", () => {
       .get("/api/articles/1/comments?sort_by=votes")
       .expect(200)
       .then(({ body }) => {
-        expect(body.articleComments).to.be.descendingBy("votes")
+        expect(body.comments).to.be.descendingBy("votes")
       })
     })
     it("GET /:article_id/comments?order=asc - status 200 - returns comments sorted ascendingly ", () => {
@@ -290,7 +290,7 @@ describe("/", () => {
       .get("/api/articles/1/comments?order=asc")
       .expect(200)
       .then(({ body }) => {
-        expect(body.articleComments).to.be.ascendingBy("created_at")
+        expect(body.comments).to.be.ascendingBy("created_at")
       })
     })
     it("POST /:article_id/comments - status 201 - returns new comment with all keys ", () => {
