@@ -70,7 +70,7 @@ describe("/", () => {
     });
   });
 
-  describe.only("/api/articles", () => {
+  describe("/api/articles", () => {
     it("GET status: 200, and returns a table of articles with all keys and comment count", () => {
       return request(app)
         .get("/api/articles")
@@ -94,7 +94,6 @@ describe("/", () => {
         .get("/api/articles?author=icellusedkars")
         .expect(200)
         .then(({ body }) => {
-          console.log(body.articles)
           body.articles.should.have.all.property("author", "icellusedkars")
           expect(body.articles).to.have.lengthOf(6)
         })
@@ -158,7 +157,7 @@ describe("/", () => {
   //  });
   });
 
-  describe("/api/articles/:article_id", () => {
+  describe.only("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
       .get("/api/articles/1")
@@ -198,7 +197,7 @@ describe("/", () => {
       .send({ inc_votes: 10 })
       .expect(200)
       .then(({ body }) => {
-        expect(body.updatedVotes[0].votes).to.eql(110)
+        expect(body.article[0].votes).to.eql(110)
       })
     })
     it("PATCH /articles/:article_id - status 200 - responds with updated decremented vote", () => {
@@ -207,7 +206,7 @@ describe("/", () => {
       .send({ inc_votes: -10 })
       .expect(200)
       .then(({ body }) => {
-        expect(body.updatedVotes[0].votes).to.eql(90)
+        expect(body.article[0].votes).to.eql(90)
       })
     })
     it("PATCH /articles/:article_id - status 404 - responds with Route Not Found", () => {
