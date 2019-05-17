@@ -14,7 +14,7 @@ describe("/", () => {
   beforeEach(() => connection.seed.run());
   after(() => connection.destroy());
 
-  describe.only("/api", () => {
+  describe("/api", () => {
     it("GET status:200", () => {
       return request(app)
         .get("/api")
@@ -67,7 +67,7 @@ describe("/", () => {
     });
   });
 
-  describe("/api/articles", () => {
+  describe.only("/api/articles", () => {
     it("GET status: 200, and returns a table of articles with all keys and comment count", () => {
       return request(app)
         .get("/api/articles")
@@ -117,7 +117,16 @@ describe("/", () => {
       .then(({ body }) => {
         expect(body.msg).to.eql("Undefined Column")
       })
-    });  
+    }); 
+  it("GET /articles?order=not_an_order: status: 200, defaults to desc", () => {
+    return request(app)
+      .get("/api/articles?order=not_an_order")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body.articles)
+        expect(body.articles).to.be.descendingBy("created_at")
+      })
+    }); 
   });
 
   describe("/api/articles/:article_id", () => {

@@ -21,6 +21,7 @@ return connection
   .modify(query => {
     if (author) query.where("articles.author", author)
     if (topic) query.where("articles.topic", topic)
+    if (order !== "asc" || order !== "desc") order = "desc"
   })
   .leftJoin('comments', 'articles.article_id', '=', 'comments.article_id')
   .groupBy('articles.article_id')
