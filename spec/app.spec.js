@@ -197,7 +197,7 @@ describe("/", () => {
       .send({ inc_votes: 10 })
       .expect(200)
       .then(({ body }) => {
-        expect(body.article[0].votes).to.eql(110)
+        expect(body.article.votes).to.eql(110)
       })
     })
     it("PATCH /articles/:article_id - status 200 - responds with updated decremented vote", () => {
@@ -206,7 +206,7 @@ describe("/", () => {
       .send({ inc_votes: -10 })
       .expect(200)
       .then(({ body }) => {
-        expect(body.article[0].votes).to.eql(90)
+        expect(body.article.votes).to.eql(90)
       })
     })
     it("PATCH /articles/:article_id - status 404 - responds with Route Not Found", () => {
@@ -218,7 +218,7 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
     })
-    it("PATCH /articles/:article_id - status 400 - responds with Bad Request", () => {
+    it("PATCH /articles/:article_id - status 400 - incomplete request responds with Bad Request", () => {
       return request(app)
       .patch("/api/articles/1")
       .expect(400)
