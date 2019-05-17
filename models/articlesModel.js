@@ -26,9 +26,7 @@ return connection
   .leftJoin('comments', 'articles.article_id', '=', 'comments.article_id')
   .groupBy('articles.article_id')
   .orderBy(sort_by || "created_at", order || "desc")
-  .then(articles => {
-    return articles
-  })
+  .returning("*")
 }
 
 exports.selectArticleById = (article_id) => {

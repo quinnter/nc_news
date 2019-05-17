@@ -8,7 +8,10 @@ const connection = require("../db/connection");
 
 const chai = require("chai");
 const chaiSorted = require("chai-sorted");
+const chaiThings = require("chai-things");
 chai.use(chaiSorted);
+chai.should();
+chai.use(chaiThings)
 
 describe("/", () => {
   beforeEach(() => connection.seed.run());
@@ -67,7 +70,7 @@ describe("/", () => {
     });
   });
 
-  describe("/api/articles", () => {
+  describe.only("/api/articles", () => {
     it("GET status: 200, and returns a table of articles with all keys and comment count", () => {
       return request(app)
         .get("/api/articles")
@@ -91,7 +94,9 @@ describe("/", () => {
         .get("/api/articles?author=icellusedkars")
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles[0].author).to.eql("icellusedkars")
+          console.log(body.articles)
+          body.articles.should.have.all.property("author", "icellusedkars")
+          expect(body.articles).to.have.lengthOf(6)
         })
    });
    it("GET /articles?topic= status: 200, returns articles by the topic param", () => {
