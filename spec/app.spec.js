@@ -259,6 +259,7 @@ describe("/", () => {
           "author",
           "body"
         )
+        expect(body.comments).to.be.descendingBy("created_at")
       })
     })
     it("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
@@ -267,14 +268,6 @@ describe("/", () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).to.eql("Route Not Found")
-      })
-    })
-    it("GET /:article_id/comments - status 200 - default returns comments sorted by date ", () => {
-      return request(app)
-      .get("/api/articles/1/comments")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.comments).to.be.descendingBy("created_at")
       })
     })
     it("GET /:article_id/comments?sort_by=votes - status 200 - returns comments sorted by votes ", () => {
@@ -302,7 +295,7 @@ describe("/", () => {
       })
       .expect(201)
       .then(({ body }) => {
-        expect(body.newComment[0]).to.have.keys(
+        expect(body.comment[0]).to.have.keys(
           "comment_id",
           "votes",
           "created_at",
