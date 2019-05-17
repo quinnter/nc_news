@@ -136,7 +136,7 @@ describe("/", () => {
   //  });
   });
 
-  describe.only("/api/articles/:article_id", () => {
+  describe("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
       .get("/api/articles/1")
@@ -162,6 +162,14 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
     })
+    it("GET /articles/wrong_value_type - status 400 - responds with Invalid ID", () => {
+      return request(app)
+      .get("/api/articles/not_a_number")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Invalid ID")
+      })
+    }) 
     it("PATCH /articles/:article_id - status 200 - responds with updated incremented vote", () => {
       return request(app)
       .patch("/api/articles/1")
@@ -206,14 +214,15 @@ describe("/", () => {
         expect(body.msg).to.eql("Bad Request")
       })
     })
-    it("GET /articles/wrong_value_type - status 400 - responds with Invalid ID", () => {
+    it("PATCH /articles/:article_id - status 400 - responds with Bad Request", () => {
       return request(app)
-      .get("/api/articles/not_a_number")
+      .patch("/api/articles/1")
+      .send({ inc_votes: "not valid", name: "bob"})
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).to.eql("Invalid ID")
+        expect(body.msg).to.eql("Bad Request")
       })
-    }) 
+    })
   })
 
   describe("/api/articles/:article_id/comments", () => {
