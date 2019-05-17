@@ -123,10 +123,17 @@ describe("/", () => {
       .get("/api/articles?order=not_an_order")
       .expect(200)
       .then(({ body }) => {
-        console.log(body.articles)
         expect(body.articles).to.be.descendingBy("created_at")
       })
     }); 
+  // it("GET /articles?author= status: 400, returns Invalid ID", () => {
+  //   return request(app)
+  //     .get("/api/articles?author=NOTANAUTHOR9999")
+  //     .expect(400)
+  //     .then(({ body }) => {
+  //       expect(body.msg).to.eql("Invalid ID")
+  //     })
+  //  });
   });
 
   describe("/api/articles/:article_id", () => {
