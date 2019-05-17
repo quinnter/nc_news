@@ -27,7 +27,7 @@ return connection
   .groupBy('articles.article_id')
   .orderBy(sort_by || "created_at", order || "desc")
   .then(articles => {
-      return articles
+    return articles
   })
 }
 
@@ -55,6 +55,9 @@ exports.selectArticleById = (article_id) => {
 }
 
 exports.updateArticleVotes = (article_id, inc_votes) => {
+  if(!inc_votes || typeof inc_votes !== 'number'){
+    return Promise.reject({code : 400})
+  }
   return connection
   .into("articles")
   .where("article_id", article_id)
@@ -62,7 +65,7 @@ exports.updateArticleVotes = (article_id, inc_votes) => {
   .returning('*')
   .then(article => {
     if (article.length === 0) return Promise.reject({ code: 404})
-    else return article
+    return article
   })
 }
 
