@@ -5,7 +5,21 @@ return connection
   .select('*')
   .from('topics')
   .then(topics => {
+    if (!topics) return Promise.reject({ code: 404 })
       return topics
   })
+}
 
+exports.selectTopic = (topic) => {
+return connection
+  .select(
+    "topics.slug",
+    "topics.description"
+  )
+  .from("topics")
+  .where("topics.slug", topic)
+  .then(topic => {
+    if (!topic) return Promise.reject({ code: 404})
+    return topic
+  })
 }

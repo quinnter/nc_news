@@ -6,6 +6,9 @@ const {
   insertArticleComment 
 } = require("../models/articlesModel")
 
+const { selectTopic } = require('../models/topicsModel')
+const { selectUser } = require("../models/usersModels")
+
 exports.getArticles = (req, res, next) => {
   selectArticles(req.query)
   .then(articles => {

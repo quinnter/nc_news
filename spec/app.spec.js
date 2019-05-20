@@ -70,7 +70,7 @@ describe("/", () => {
     });
   });
 
-  describe("/api/articles", () => {
+  describe.only("/api/articles", () => {
     it("GET status: 200, and returns a table of articles with all keys and comment count", () => {
       return request(app)
         .get("/api/articles")
