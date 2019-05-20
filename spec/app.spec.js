@@ -237,19 +237,14 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/articles/:article_id/comments", () => {
+  describe("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
       .expect(200)
       .then(({ body }) => {
-        expect(body.comments[0]).to.have.keys(
-          "comment_id",
-          "votes",
-          "created_at",
-          "author",
-          "body"
-        )
+        console.log(body)
+        expect(body.comments).to.have.lengthOf(13)
         expect(body.comments).to.be.descendingBy("created_at")
       })
     })
