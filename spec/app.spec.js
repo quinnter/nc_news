@@ -147,14 +147,14 @@ describe("/", () => {
           expect(body.msg).to.eql("Method Not Allowed");
         });
     }); 
-  // it("GET /articles?author= status: 400, returns Invalid ID", () => {
-  //   return request(app)
-  //     .get("/api/articles?author=NOTANAUTHOR9999")
-  //     .expect(400)
-  //     .then(({ body }) => {
-  //       expect(body.msg).to.eql("Invalid ID")
-  //     })
-  //  });
+  it("GET /articles?author= status: 404, returns Route Not Found", () => {
+    return request(app)
+      .get("/api/articles?author=NOTANAUTHOR9999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Route Not Found")
+      })
+   });
   });
 
   describe("/api/articles/:article_id", () => {
@@ -237,7 +237,7 @@ describe("/", () => {
     })
   })
 
-  describe("/api/articles/:article_id/comments", () => {
+  describe.only("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
@@ -286,7 +286,7 @@ describe("/", () => {
       })
       .expect(201)
       .then(({ body }) => {
-        expect(body.comment[0]).to.have.keys(
+        expect(body.comment).to.have.keys(
           "comment_id",
           "votes",
           "created_at",
@@ -319,7 +319,7 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/comments/:comment_id", () => {
+  describe("/api/comments/:comment_id", () => {
     it("PATCH /comments/:comment_id - status 200 - returns comments with updated votes", () => {
       return request(app)
       .patch("/api/comments/1")
