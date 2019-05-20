@@ -157,7 +157,7 @@ describe("/", () => {
   //  });
   });
 
-  describe("/api/articles/:article_id", () => {
+  describe.only("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
       .get("/api/articles/1")
@@ -221,18 +221,10 @@ describe("/", () => {
     it("PATCH /articles/:article_id - status 400 - incomplete request responds with Bad Request", () => {
       return request(app)
       .patch("/api/articles/1")
-      .expect(400)
+      .send({not: "valid"})
+      .expect(200)
       .then(({ body }) => {
-        expect(body.msg).to.eql("Bad Request")
-      })
-    })
-    it("PATCH /articles/:article_id - status 400 - responds with Bad Request", () => {
-      return request(app)
-      .patch("/api/articles/1")
-      .send({ inc_votes: "not valid"})
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Bad Request")
+        expect(body.comment).to.eql("")
       })
     })
     it("PATCH /articles/:article_id - status 400 - responds with Bad Request", () => {
@@ -328,7 +320,7 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/comments/:comment_id", () => {
+  describe("/api/comments/:comment_id", () => {
     it("PATCH /comments/:comment_id - status 200 - returns comments with updated votes", () => {
       return request(app)
       .patch("/api/comments/1")
