@@ -338,7 +338,7 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
     })
-    it("PATCH /comments/:comment_id - status 400 - when patch send is invalid responds with Bad Request", () => {
+    it("PATCH /comments/:comment_id - status 200 - when patch send is invalid returns unchanged comment", () => {
       return request(app)
       .patch("/api/comments/1")
       .send({not: "allowed"})
