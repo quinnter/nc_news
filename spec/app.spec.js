@@ -246,7 +246,7 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/articles/:article_id/comments", () => {
+  describe("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
@@ -328,14 +328,14 @@ describe("/", () => {
     })
   })
 
-  describe("/api/comments/:comment_id", () => {
+  describe.only("/api/comments/:comment_id", () => {
     it("PATCH /comments/:comment_id - status 200 - returns comments with updated votes", () => {
       return request(app)
       .patch("/api/comments/1")
       .send({ inc_votes: 10 })
       .expect(200)
       .then(({ body }) => {
-        expect(body.comment[0].votes).to.eql(26)
+        expect(body.comment.votes).to.eql(26)
       })
     })
     it("PATCH /comments/:comment_id - status 404 - responds with Route Not Found", () => {
