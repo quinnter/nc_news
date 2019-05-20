@@ -329,11 +329,11 @@ describe("/", () => {
   })
 
   describe("/api/comments/:comment_id", () => {
-    it("PATCH /comments/:comment_id - status 201 - returns comments with updated votes", () => {
+    it("PATCH /comments/:comment_id - status 200 - returns comments with updated votes", () => {
       return request(app)
       .patch("/api/comments/1")
       .send({ inc_votes: 10 })
-      .expect(201)
+      .expect(200)
       .then(({ body }) => {
         expect(body.comment[0].votes).to.eql(26)
       })
