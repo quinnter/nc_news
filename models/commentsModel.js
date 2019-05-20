@@ -1,6 +1,9 @@
 const connection = require('../db/connection')
 
 exports.updateCommentVotes = (comment_id, inc_votes) => {
+  if (!inc_votes || typeof inc_votes !== "number") {
+    return Promise.reject({ code: 400 });
+  }
     return connection
     .into("comments")
     .where("comment_id", comment_id)

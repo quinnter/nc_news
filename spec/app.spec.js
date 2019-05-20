@@ -347,12 +347,12 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
     })
-    it("PATCH /comments/:comment_id - status 400 - when patch send is invalid responds with Invalid ID", () => {
+    it("PATCH /comments/:comment_id - status 400 - when patch send is invalid responds with Bad Request", () => {
       return request(app)
       .patch("/api/comments/1")
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).to.eql("Invalid ID")
+        expect(body.msg).to.eql("Bad Request")
       })
     })
     it("DELETE /comments/:comment_id - status 204 - deletes specified comment", () => {
