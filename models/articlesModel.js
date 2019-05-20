@@ -48,6 +48,7 @@ exports.selectArticleById = article_id => {
 };
 
 exports.updateArticleVotes = (article_id, inc_votes = 0) => {
+  if (inc_votes !== "number") inc_votes = 0
   return connection
     .into("articles")
     .where("article_id", article_id)
