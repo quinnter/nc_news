@@ -218,13 +218,21 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
     })
-    it("PATCH /articles/:article_id - status 400 - incomplete request responds with Bad Request", () => {
+    it("PATCH /articles/:article_id - status 200 - incomplete request returns unchanged article", () => {
       return request(app)
       .patch("/api/articles/1")
       .send({not: "valid"})
       .expect(200)
       .then(({ body }) => {
-        expect(body.comment).to.eql("")
+        expect(body.article).to.have.keys(
+          "article_id",
+          "title",
+          "body",
+          "votes",
+          "topic",
+          "author",
+          "created_at"
+          )
       })
     })
     it("PATCH /articles/:article_id - status 400 - responds with Bad Request", () => {

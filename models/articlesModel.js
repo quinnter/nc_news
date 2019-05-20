@@ -47,14 +47,11 @@ exports.selectArticleById = article_id => {
     });
 };
 
-exports.updateArticleVotes = (article_id, inc_votes) => {
-  if (!inc_votes || typeof inc_votes !== "number") {
-    return Promise.reject({ code: 400 });
-  }
+exports.updateArticleVotes = (article_id, inc_votes = 0) => {
   return connection
     .into("articles")
     .where("article_id", article_id)
-    .increment({ votes: inc_votes }, 0)
+    .increment({ "votes": inc_votes })
     .returning("*")
     .then(([article]) => {
       if (!article) return Promise.reject({ code: 404 });
