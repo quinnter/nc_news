@@ -157,7 +157,7 @@ describe("/", () => {
   //  });
   });
 
-  describe.only("/api/articles/:article_id", () => {
+  describe("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
       .get("/api/articles/1")
@@ -233,15 +233,6 @@ describe("/", () => {
           "author",
           "created_at"
           )
-      })
-    })
-    it("PATCH /articles/:article_id - status 400 - responds with Bad Request", () => {
-      return request(app)
-      .patch("/api/articles/1")
-      .send({ inc_votes: "not valid", name: "bob"})
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Bad Request")
       })
     })
   })
@@ -328,7 +319,7 @@ describe("/", () => {
     })
   })
 
-  describe("/api/comments/:comment_id", () => {
+  describe.only("/api/comments/:comment_id", () => {
     it("PATCH /comments/:comment_id - status 200 - returns comments with updated votes", () => {
       return request(app)
       .patch("/api/comments/1")
@@ -353,13 +344,13 @@ describe("/", () => {
       .send({not: "allowed"})
       .expect(200)
       .then(({ body }) => {
-        expect(body.comment).to.eql({ comment_id: 1,
-          author: 'butter_bridge',
-          article_id: 9,
-          votes: 16,
-          created_at: '2017-11-22T12:36:03.389Z',
-          body:
-           'Oh, I\'ve got compassion running out of my nose, pal! I\'m the Sultan of Sentiment!' })
+        expect(body.comment).to.have.keys(          
+        "comment_id",
+        "votes",
+        "created_at",
+        "author",
+        "article_id",
+        "body")
       })
     })
     it("DELETE /comments/:comment_id - status 204 - deletes specified comment", () => {
