@@ -12,7 +12,7 @@ const { selectUser } = require("../models/usersModels")
 exports.getArticles = (req, res, next) => {
 const { topic, author } = req.query
 
-if (!topic && !author){
+if (!topic && !author) {
   selectArticles(req.query)
   .then(articles => {
     res.status(200).send({ articles })
@@ -25,7 +25,7 @@ if (!topic && !author){
  ])
  .then(([author, topic]) => {
    if(author !== null && !author) return Promise.reject({ code: 404 })
-   else if(topics !== null && !topic) return Promise.reject({ code: 404 })
+   else if(topic !== null && !topic) return Promise.reject({ code: 404 })
    else return selectArticles(req.query)
  })
  .then(articles => {
