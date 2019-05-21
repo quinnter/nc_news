@@ -155,6 +155,14 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
    });
+   it("GET /articles?topic= status: 404, returns Route Not Found", () => {
+    return request(app)
+      .get("/api/articles?topic=NOTATOPIC9999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Route Not Found")
+      })
+   });
   });
 
   describe("/api/articles/:article_id", () => {
