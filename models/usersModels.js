@@ -10,13 +10,14 @@ return connection
 }
 
 exports.selectUser = (username) => {
+  // console.log(username, "<----og username")
 return connection
   .select('*')
   .from("users")
   .where({ username })
   .first()
   .then(user => {
-    // if (!user) return Promise.reject({ code: 404 })
+    // console.log(user, "<------end result of user select")
     return user
   })
 }

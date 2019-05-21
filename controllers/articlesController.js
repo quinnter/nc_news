@@ -10,16 +10,30 @@ const { selectTopic } = require('../models/topicsModel')
 const { selectUser } = require("../models/usersModels")
 
 exports.getArticles = (req, res, next) => {
+const { topic, author } = req.query
+
+if (!topic && !author){
   selectArticles(req.query)
   .then(articles => {
-      res.status(200).send({ articles })
-      Promise.all([selectTopic(req.query.topic), selectUser(req.query.author)])
-  })
-  .then(([topic, author]) => {
-    console.log(author)
-    if (!topic || !author) return Promise.reject({ code: 404 })
+    res.status(200).send({ articles })
   })
   .catch(next)
+} else {
+ Promise.all([
+   author ? selectUser(author) : null,
+   topic ? selectTopic(topic) : null
+ ])
+ .then(([author, topic]) => {
+   if(author !== null && !author) return Promise.reject({ code: 404 })
+   else if(topics !== null && !topic) return Promise.reject({ code: 404 })
+   else return selectArticles(req.query)
+ })
+ .then(articles => {
+   if(!articles) return Promise.reject({ code: 404 });
+   else res.status(200).send({ articles })
+ })
+ .catch(next)
+ }
 }
 
 exports.getArticleById = (req, res, next) => {
