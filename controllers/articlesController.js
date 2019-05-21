@@ -13,6 +13,11 @@ exports.getArticles = (req, res, next) => {
   selectArticles(req.query)
   .then(articles => {
       res.status(200).send({ articles })
+      Promise.all([selectTopic(req.query.topic), selectUser(req.query.author)])
+  })
+  .then(([topic, author]) => {
+    console.log(author)
+    if (!topic || !author) return Promise.reject({ code: 404 })
   })
   .catch(next)
 }

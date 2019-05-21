@@ -16,7 +16,7 @@ return connection
   .where({ username })
   .first()
   .then(user => {
-    if (!user) return Promise.reject({ code: 404 })
+    // if (!user) return Promise.reject({ code: 404 })
     return user
   })
 }

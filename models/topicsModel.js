@@ -17,9 +17,8 @@ return connection
     "topics.description"
   )
   .from("topics")
-  .where("topics.slug", topic)
+  .where("slug", topic)
   .then(topic => {
-    if (!topic) return Promise.reject({ code: 404})
     return topic
   })
 }

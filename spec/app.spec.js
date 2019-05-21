@@ -221,7 +221,7 @@ describe("/", () => {
     it("PATCH /articles/:article_id - status 200 - incomplete request returns unchanged article", () => {
       return request(app)
       .patch("/api/articles/1")
-      .send({not: "valid"})
+      .send({inc_votes: "valid"})
       .expect(200)
       .then(({ body }) => {
         expect(body.article).to.have.keys(
