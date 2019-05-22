@@ -10,14 +10,14 @@ return connection
 }
 
 exports.selectUser = (username) => {
-  // console.log(username, "<----og username")
-return connection
+console.log(username)
+  return connection
   .select('*')
   .from("users")
   .where({ username })
   .first()
   .then(user => {
-    // console.log(user, "<------end result of user select")
+    console.log(user)
     return user
   })
 }

@@ -11,18 +11,15 @@ return connection
 }
 
 exports.selectTopic = (topics) => {
-  // console.log(topics, "<----- og topic")
-  const myQuery = connection
+  return connection
   .select(
     "topics.slug",
     "topics.description"
-  )
-  .from("topics")
-  .where("slug", topics);
-
-return myQuery
-  .then(topic => {
-    // console.log(topic, "<--- end of select topic")
+    )
+    .from("topics")
+    .where("topics.slug", topics)
+    .first()
+    .then(topic => {
     return topic
   })
 }

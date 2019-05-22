@@ -10,9 +10,10 @@ const { selectTopic } = require('../models/topicsModel')
 const { selectUser } = require("../models/usersModels")
 
 exports.getArticles = (req, res, next) => {
-const { topic, author } = req.query
+const { author } = req.query
+const { topic } = req.query
 
-if (!topic && !author) {
+if (!author && !topic) {
   selectArticles(req.query)
   .then(articles => {
     res.status(200).send({ articles })

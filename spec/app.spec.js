@@ -157,7 +157,7 @@ describe("/", () => {
    });
    it("GET /articles?topic= status: 404, returns Route Not Found", () => {
     return request(app)
-      .get("/api/articles?topic=NOTATOPIC9999")
+      .get("/api/articles?topic=NOTATOPIC9999999")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).to.eql("Route Not Found")
@@ -251,7 +251,6 @@ describe("/", () => {
       .get("/api/articles/1/comments")
       .expect(200)
       .then(({ body }) => {
-        console.log(body)
         expect(body.comments).to.have.lengthOf(13)
         expect(body.comments).to.be.descendingBy("created_at")
       })
