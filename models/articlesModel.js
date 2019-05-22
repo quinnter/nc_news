@@ -73,7 +73,8 @@ exports.selectArticleComments = (article_id, sort_by, order) => {
     .where({ article_id })
     .orderBy(sort_by || "created_at", order || "desc")
     .then(articleComments => {
-      if (!articleComments.length) return Promise.reject({ code: 404 });
+      console.log(articleComments)
+      if (!articleComments) return Promise.reject({ code: 404 });
       return articleComments;
     });
 };

@@ -245,7 +245,7 @@ describe("/", () => {
     })
   })
 
-  describe("/api/articles/:article_id/comments", () => {
+  describe.only("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
@@ -253,6 +253,14 @@ describe("/", () => {
       .then(({ body }) => {
         expect(body.comments).to.have.lengthOf(13)
         expect(body.comments).to.be.descendingBy("created_at")
+      })
+    })
+    it("GET /:article_id/comments - status 200 - returns", () => {
+      return request(app)
+      .get("/api/articles/2/comments")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.comments).to.have.lengthOf(0)
       })
     })
     it("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
