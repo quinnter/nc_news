@@ -47,12 +47,12 @@ exports.selectArticleById = article_id => {
     });
 };
 
-exports.updateArticleVotes = (article_id, inc_votes = 0) => {
-  if (inc_votes !== "number") inc_votes = 0
+exports.updateArticleVotes = (article_id, inc_votes) => {
+  if (typeof inc_votes !== "number") inc_votes = 0
   return connection
     .into("articles")
     .where("article_id", article_id)
-    .increment({ "votes": inc_votes })
+    .increment({ 'votes' : inc_votes })
     .returning("*")
     .then(([article]) => {
       if (!article) return Promise.reject({ code: 404 });
