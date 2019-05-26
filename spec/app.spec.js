@@ -245,7 +245,7 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/articles/:article_id/comments", () => {
+  describe("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
