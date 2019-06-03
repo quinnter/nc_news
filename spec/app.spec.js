@@ -263,7 +263,7 @@ describe("/", () => {
         expect(body.comments).to.have.lengthOf(0)
       })
     })
-    it("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
+    it.only("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
       return request(app)
       .get("/api/articles/99999999/comments")
       .expect(404)
@@ -390,7 +390,7 @@ describe("/", () => {
         expect(body.user.username).to.eql("icellusedkars")
       })
     })
-    it("GET /:username - status 404 - when user does not exist responds with ", () => {
+    it.only("GET /:username - status 404 - when user does not exist responds with ", () => {
       return request(app)
       .get("/api/users/icellusedkarsss")
       .expect(404)
@@ -398,6 +398,14 @@ describe("/", () => {
         expect(body.msg).to.eql("Route Not Found")
       })
     })
+    it('PUT - status 405 - methods not allowed return with 405', () => {
+      return request(app)
+      .put("/api/users")
+      .expect(405)
+      .then(({ body }) => {
+        expect(body.msg).to.eql("Method Not Allowed")
+      })
+    });
   })
 
 });
