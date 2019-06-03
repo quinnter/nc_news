@@ -17,7 +17,7 @@ console.log(username)
   .where({ username })
   .first()
   .then(user => {
-    console.log(user)
+    if (user === undefined) return Promise.reject({code: 404})
     return user
   })
 }

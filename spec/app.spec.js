@@ -392,7 +392,7 @@ describe("/", () => {
     })
     it.only("GET /:username - status 404 - when user does not exist responds with ", () => {
       return request(app)
-      .get("/api/users/icellusedkarsss")
+      .get("/api/users/NOTAUSER999999")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).to.eql("Route Not Found")
