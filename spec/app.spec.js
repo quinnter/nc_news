@@ -245,7 +245,7 @@ describe("/", () => {
     })
   })
 
-  describe("/api/articles/:article_id/comments", () => {
+  describe.only("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
@@ -263,7 +263,7 @@ describe("/", () => {
         expect(body.comments).to.have.lengthOf(0)
       })
     })
-    it.only("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
+    it("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
       return request(app)
       .get("/api/articles/99999999/comments")
       .expect(404)
@@ -390,7 +390,7 @@ describe("/", () => {
         expect(body.user.username).to.eql("icellusedkars")
       })
     })
-    it.only("GET /:username - status 404 - when user does not exist responds with ", () => {
+    it("GET /:username - status 404 - when user does not exist responds with 404", () => {
       return request(app)
       .get("/api/users/NOTAUSER999999")
       .expect(404)
