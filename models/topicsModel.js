@@ -10,6 +10,21 @@ return connection
   })
 }
 
+exports.selectOneTopic = (topics) => {
+  return connection
+  .select(
+    "topics.slug",
+    "topics.description"
+    )
+    .from("topics")
+    .where("topics.slug", topics.slug)
+    .first()
+    .then(topic => {
+      console.log(topic)
+    return topic
+  })
+}
+
 exports.selectTopic = (topics) => {
   return connection
   .select(
@@ -20,6 +35,7 @@ exports.selectTopic = (topics) => {
     .where("topics.slug", topics)
     .first()
     .then(topic => {
+      console.log(topic)
     return topic
   })
 }

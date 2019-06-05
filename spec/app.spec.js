@@ -106,7 +106,7 @@ describe("/", () => {
           expect(body.articles).to.have.lengthOf(6)
         })
    });
-   it("GET /articles?topic= status: 200, returns articles by the topic param", () => {
+   it.only("GET /articles?topic= status: 200, returns articles by the topic param", () => {
     return request(app)
       .get("/api/articles?topic=mitch")
       .expect(200)

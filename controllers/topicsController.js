@@ -1,4 +1,4 @@
-const { selectTopics, selectTopic } = require("../models/topicsModel")
+const { selectTopics, selectOneTopic } = require("../models/topicsModel")
 
 exports.getTopics = (req, res, next) => {
   selectTopics(req.query)
@@ -8,8 +8,10 @@ exports.getTopics = (req, res, next) => {
 }
 
 exports.getTopicBySlug = (req, res, next) => {
-  selectTopic(req.query)
+  console.log(req.params)
+  selectOneTopic(req.params)
   .then(topic => {
+    console.log(topic)
     res.status(200).send({ topic })
   })
 }
