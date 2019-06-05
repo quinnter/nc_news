@@ -51,13 +51,21 @@ describe("/", () => {
   });
 
   describe("/api/topics", () => {
-    it("GET status: 200, and returns a table of topics", () => {
+    it("GET status: 200, and returns a list of topics", () => {
       return request(app)
         .get("/api/topics")
         .expect(200)
         .then(({ body }) => {
           expect(body).to.haveOwnProperty("topics");
         });
+    });
+    it.only('GET /:slug status: 200, returns a single topic ', () => {
+      return request(app)
+      .get ("/api/topics/mitch")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body)
+      })
     });
     it("POST/PUT/DELETE status: 405 - responds with Method Not Allowed", () => {
       return request(app)
@@ -245,7 +253,7 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/articles/:article_id/comments", () => {
+  describe("/api/articles/:article_id/comments", () => {
     it("GET /:article_id/comments - status 200 - returns", () => {
       return request(app)
       .get("/api/articles/1/comments")
