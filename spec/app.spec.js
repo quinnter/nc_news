@@ -59,7 +59,7 @@ describe("/", () => {
           expect(body).to.haveOwnProperty("topics");
         });
     });
-    it.only('GET /:slug status: 200, returns a single topic ', () => {
+    it('GET /:slug status: 200, returns a single topic ', () => {
       return request(app)
       .get ("/api/topics/mitch")
       .expect(200)
@@ -106,7 +106,7 @@ describe("/", () => {
           expect(body.articles).to.have.lengthOf(6)
         })
    });
-   it.only("GET /articles?topic= status: 200, returns articles by the topic param", () => {
+   it("GET /articles?topic= status: 200, returns articles by the topic param", () => {
     return request(app)
       .get("/api/articles?topic=mitch")
       .expect(200)
@@ -144,6 +144,28 @@ describe("/", () => {
       .expect(200)
       .then(({ body }) => {
         expect(body.articles).to.be.descendingBy("created_at")
+      })
+    });
+    it.only('POST/articles status 200 returns new article', () => {
+      return request(app)
+      .post("/api/articles")
+      .send({
+        title: "A very interesting Article",
+        body: "This article is very interesting because I say it is!",
+        topic: "mitch",
+        author: "icellusedkars"
+      })
+      .then(({ body }) =>{
+        console.log(body)
+        expect(body.article).to.have.keys(
+          "author",
+          "article_id",
+          "title",
+          "body",
+          "votes",
+          "topic",
+          "created_at"
+        )
       })
     });
     it("PATCH /api/articles - status: 405 - responds with Method Not Allowed", () => {

@@ -3,7 +3,8 @@ const {
   selectArticleById, 
   updateArticleVotes, 
   selectArticleComments, 
-  insertArticleComment 
+  insertArticleComment,
+  insertArticle 
 } = require("../models/articlesModel")
 
 const { selectTopic } = require('../models/topicsModel')
@@ -74,6 +75,19 @@ exports.postArticleComment = (req, res, next) => {
   .then(([comment]) => {
     if (!comment) return Promise.reject({ code : '23503'})
      else res.status(201).send({ comment })
+  })
+  .catch(next)
+}
+
+exports.postArticle = (req, res, next) => {
+  const {title, body, author, topic } = req.body
+  const newArticleKeys = { title, body, author, topic }
+  console.log(newArticleKeys)
+  insertArticleComment(newArticleKeys)
+  .then(([article]) => {
+    console.log(article)
+    if (!article) return Promise.reject({ code: 404 })
+    else res.status(201).send({article})
   })
   .catch(next)
 }

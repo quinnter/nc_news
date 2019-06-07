@@ -84,3 +84,10 @@ exports.insertArticleComment = newCommentKeys => {
     .insert(newCommentKeys)
     .returning("*");
 };
+
+exports.insertArticle = newArticleKeys => {
+  return connection
+  .into("articles")
+  .insert(newArticleKeys)
+  .returning("*");
+}
