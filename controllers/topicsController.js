@@ -1,4 +1,4 @@
-const { selectTopics, selectOneTopic } = require("../models/topicsModel")
+const { selectTopics, selectOneTopic, insertTopic } = require("../models/topicsModel")
 
 exports.getTopics = (req, res, next) => {
   selectTopics(req.query)
@@ -8,10 +8,18 @@ exports.getTopics = (req, res, next) => {
 }
 
 exports.getTopicBySlug = (req, res, next) => {
-  console.log(req.params)
   selectOneTopic(req.params)
   .then(topic => {
-    console.log(topic)
     res.status(200).send({ topic })
   })
+}
+
+exports.postTopic = (req, res, next) => {
+  const { slug, description } = req.body
+  const newTopicKeys = {slug, description}
+  insertTopic(newTopicKeys)
+  .then(([topic]) => {
+    res.status(201).send({ topic })
+  })
+  .catch(next)
 }

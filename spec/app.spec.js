@@ -37,7 +37,7 @@ describe("/", () => {
     });
   });
 
-  describe("/api/topics", () => {
+  describe.only("/api/topics", () => {
     it("GET status: 200, and returns a list of topics", () => {
       return request(app)
         .get("/api/topics")
@@ -53,10 +53,21 @@ describe("/", () => {
         .then(({ body }) => {
         })
     });
-    it("POST/PUT/DELETE status: 405 - responds with Method Not Allowed", () => {
+    it('POST status 201 - returns new topic', () => {
       return request(app)
-        .post("/api/topics")
-        .send({ not: "allowed!!!" })
+      .post("/api/topics")
+      .send({
+        slug: "Testing",
+        description: "Testing is a good way to make good code"
+      })
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.topic).to.have.keys("slug", "description")
+      })
+    });
+    it("PUT/DELETE status: 405 - responds with Method Not Allowed", () => {
+      return request(app)
+        .delete("/api/topics")
         .expect(405)
         .then(({ body }) => {
           expect(body.msg).to.eql("Method Not Allowed");
@@ -259,6 +270,14 @@ describe("/", () => {
           )
         })
     })
+    it('DELETE /articles/:article_id - status 204 - deletes article by id', () => {
+      return request(app)
+      .delete("/api/articles/2")
+      .expect(204)
+      .then(({ body }) => {
+        expect(body).to.eql({})
+      })
+    });
   })
 
   describe("/api/articles/:article_id/comments", () => {

@@ -37,3 +37,10 @@ exports.selectTopic = (topics) => {
     return topic
   })
 }
+
+exports.insertTopic = newTopicKeys => {
+  return connection 
+  .from("topics")
+  .insert(newTopicKeys)
+  .returning("*")
+}
