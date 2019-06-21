@@ -10,7 +10,6 @@ return connection
 }
 
 exports.selectUser = (username) => {
-console.log(username)
   return connection
   .select('*')
   .from("users")

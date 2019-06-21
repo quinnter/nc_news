@@ -51,7 +51,6 @@ describe("/", () => {
         .get("/api/topics/mitch")
         .expect(200)
         .then(({ body }) => {
-          console.log(body)
         })
     });
     it("POST/PUT/DELETE status: 405 - responds with Method Not Allowed", () => {
@@ -66,12 +65,13 @@ describe("/", () => {
   });
 
   describe("/api/articles", () => {
-    it("GET status: 200, and returns a table of articles with all keys and comment count", () => {
+    it("GET status: 200, and returns a table of articles with all keys and comment count, with a limit of ten articles", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
         .then(({ body }) => {
           expect(body).to.haveOwnProperty("articles");
+          expect(body.articles).to.have.lengthOf(10);
           expect(body.articles[0]).to.contain.keys(
             "article_id",
             "title",
@@ -143,7 +143,7 @@ describe("/", () => {
           username: "icellusedkars"
         })
         .then(({ body }) => {
-          expect(body).to.have.keys(
+          expect(body.article).to.have.keys(
             "author",
             "article_id",
             "title",
@@ -181,7 +181,7 @@ describe("/", () => {
     });
   });
 
-  describe("/api/articles/:article_id", () => {
+  describe.only("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
         .get("/api/articles/1")
@@ -281,7 +281,7 @@ describe("/", () => {
     })
     it("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
       return request(app)
-        .get("/api/articles/99999999/comments")
+        .get("/api/articles/999999/comments")
         .expect(404)
         .then(({ body }) => {
           expect(body.msg).to.eql("Route Not Found")
@@ -389,7 +389,7 @@ describe("/", () => {
     })
     it("DELETE /comments/:not_valid_id - status 404 - when comment ID doesnt exist", () => {
       return request(app)
-        .delete("/api/comments/999999")
+        .delete("/api/comments/99999")
         .expect(404)
         .then(({ body }) => {
           expect(body.msg).to.eql("Route Not Found")
