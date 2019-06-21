@@ -62,7 +62,7 @@ exports.updateArticleVotes = (article_id, inc_votes) => {
     });
 };
 
-exports.selectArticleComments = (article_id, sort_by, order) => {
+exports.selectArticleComments = (article_id, sort_by, order, limit = 10, p = 1) => {
   return connection
     .select(
       "comments.comment_id",
@@ -74,6 +74,8 @@ exports.selectArticleComments = (article_id, sort_by, order) => {
     .from("comments")
     .where({ article_id })
     .orderBy(sort_by || "created_at", order || "desc")
+    .limit(limit)
+    .offset((p - 1) * limit)
     .then(articleComments => {
       return articleComments;
     });

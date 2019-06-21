@@ -181,7 +181,7 @@ describe("/", () => {
     });
   });
 
-  describe.only("/api/articles/:article_id", () => {
+  describe("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
         .get("/api/articles/1")
@@ -267,7 +267,7 @@ describe("/", () => {
         .get("/api/articles/1/comments")
         .expect(200)
         .then(({ body }) => {
-          expect(body.comments).to.have.lengthOf(13)
+          expect(body.comments).to.have.lengthOf(10)
           expect(body.comments).to.be.descendingBy("created_at")
         })
     })
