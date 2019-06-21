@@ -17,4 +17,5 @@ exports.deleteCommentById = (req, res, next) => {
        if (result === 1) res.sendStatus(204)
        else return Promise.reject({ code: 404 })  
     })
+    .catch(next)
 }
