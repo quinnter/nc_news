@@ -4,7 +4,8 @@ const {
   updateArticleVotes,
   selectArticleComments,
   insertArticleComment,
-  insertArticle
+  insertArticle,
+  removeArticleById
 } = require("../models/articlesModel")
 
 const { selectTopic } = require('../models/topicsModel')
@@ -96,4 +97,14 @@ exports.postArticle = (req, res, next) => {
       else res.status(201).send({ article })
     })
     .catch(next)
+}
+
+exports.deleteArticleById = (req, res, next) => {
+  const { article_id } = req.params
+  removeArticleById(article_id)
+  .then(result => {
+    if (result === 1) res.sendStatus(204)
+    else return Promise.reject({ code: 404 })
+  })
+  .catch(next)
 }
