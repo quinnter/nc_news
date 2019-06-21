@@ -1,6 +1,6 @@
 const connection = require("../db/connection");
 
-exports.selectArticles = ({ sort_by, order, author, topic }) => {
+exports.selectArticles = ({ sort_by, order, author, topic, limit = 10, p = 1 }) => {
   return connection
     .select(
       "articles.article_id",
@@ -21,6 +21,8 @@ exports.selectArticles = ({ sort_by, order, author, topic }) => {
     .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
     .groupBy("articles.article_id")
     .orderBy(sort_by || "created_at", order || "desc")
+    .limit(limit)
+    .offset((p - 1) * limit)
     .returning("*");
 };
 
@@ -52,7 +54,7 @@ exports.updateArticleVotes = (article_id, inc_votes) => {
   return connection
     .into("articles")
     .where("article_id", article_id)
-    .increment({ 'votes' : inc_votes })
+    .increment({ 'votes': inc_votes })
     .returning("*")
     .then(([article]) => {
       if (!article) return Promise.reject({ code: 404 });
@@ -73,7 +75,6 @@ exports.selectArticleComments = (article_id, sort_by, order) => {
     .where({ article_id })
     .orderBy(sort_by || "created_at", order || "desc")
     .then(articleComments => {
-      if (!articleComments) return Promise.reject({ code: 404 });
       return articleComments;
     });
 };
@@ -87,11 +88,10 @@ exports.insertArticleComment = newCommentKeys => {
 
 exports.insertArticle = newArticleKeys => {
   return connection
-  .into("articles")
-  .insert(newArticleKeys)
-  // .returning("*");
-  .then(article => {
-    console.log(article)
-    return article
-  })
+    .into("articles")
+    .insert(newArticleKeys)
+    .returning("*")
+    .then(article => {
+      return article
+    })
 }
