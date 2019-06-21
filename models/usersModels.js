@@ -20,3 +20,10 @@ exports.selectUser = (username) => {
     return user
   })
 }
+
+exports.insertUser =  newUserKeys => {
+  return connection
+  .into("users")
+  .insert(newUserKeys)
+  .returning("*")
+}

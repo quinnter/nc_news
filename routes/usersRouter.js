@@ -1,10 +1,11 @@
 const express = require("express");
 const usersRouter = express.Router()
-const { getUsers, getUser } = require("../controllers/usersController")
+const { getUsers, getUser, postUser } = require("../controllers/usersController")
 const { methodNotAllowed } = require("../errors/index")
 
 usersRouter.route("/")
 .get(getUsers)
+.post(postUser)
 .all(methodNotAllowed)
 
 usersRouter.route("/:username")

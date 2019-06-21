@@ -441,6 +441,18 @@ describe("/", () => {
           expect(body.msg).to.eql("Route Not Found")
         })
     })
+    it('POST / status 201 - returns new user', () => {
+      return request(app)
+      .post("/api/users")
+      .send({
+        username: "TheTester",
+        name: "Tim"
+      })
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.user).to.have.keys("username", "name", "avatar_url")
+      })
+    });
     it('PUT/DELETE - status 405 - methods not allowed return with 405', () => {
       return request(app)
         .put("/api/users")
