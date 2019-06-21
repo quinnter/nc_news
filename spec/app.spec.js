@@ -37,7 +37,7 @@ describe("/", () => {
     });
   });
 
-  describe.only("/api/topics", () => {
+  describe("/api/topics", () => {
     it("GET status: 200, and returns a list of topics", () => {
       return request(app)
         .get("/api/topics")
@@ -416,7 +416,15 @@ describe("/", () => {
     })
   })
 
-  describe("/api/users", () => {
+  describe.only("/api/users", () => {
+    it('GET status 200 - returns a list of users', () => {
+      return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.users).to.have.lengthOf(4)
+      })
+    });
     it("GET /:username - status 200 - returns the specific user object that matches username", () => {
       return request(app)
         .get("/api/users/icellusedkars")
@@ -433,7 +441,7 @@ describe("/", () => {
           expect(body.msg).to.eql("Route Not Found")
         })
     })
-    it('PUT - status 405 - methods not allowed return with 405', () => {
+    it('PUT/DELETE - status 405 - methods not allowed return with 405', () => {
       return request(app)
         .put("/api/users")
         .expect(405)
