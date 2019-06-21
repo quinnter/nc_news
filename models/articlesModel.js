@@ -89,5 +89,9 @@ exports.insertArticle = newArticleKeys => {
   return connection
   .into("articles")
   .insert(newArticleKeys)
-  .returning("*");
+  // .returning("*");
+  .then(article => {
+    console.log(article)
+    return article
+  })
 }

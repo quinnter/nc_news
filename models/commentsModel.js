@@ -7,7 +7,7 @@ exports.updateCommentVotes = (comment_id, inc_votes = 0) => {
     .increment({'votes': inc_votes})
     .returning('*')
     .then(([comment]) => {
-      if (!comment) return Promise.reject({ code: 404})
+      if (!comment) return Promise.reject({ code: 404 })
       else return comment
     })
 }

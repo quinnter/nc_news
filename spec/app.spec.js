@@ -18,19 +18,6 @@ describe("/", () => {
   after(() => connection.destroy());
 
   describe("/api", () => {
-    it("GET status:200", () => {
-      return request(app)
-        .get("/api")
-        .expect(200)
-        .then(({ body }) => {
-          expect(body.endpoints[0]).to.eql({
-            'topics': 'these are topics',
-            'articles': 'these are articles',
-            'comments': 'these are comments',
-            'users': 'these are users'
-          });
-        });
-    });
     it("ANY /not_a_route - status:404 - responds with Route Not Found Error", () => {
       return request(app)
         .get("/api/not_a_route")
@@ -61,11 +48,11 @@ describe("/", () => {
     });
     it('GET /:slug status: 200, returns a single topic ', () => {
       return request(app)
-      .get ("/api/topics/mitch")
-      .expect(200)
-      .then(({ body }) => {
-        console.log(body)
-      })
+        .get("/api/topics/mitch")
+        .expect(200)
+        .then(({ body }) => {
+          console.log(body)
+        })
     });
     it("POST/PUT/DELETE status: 405 - responds with Method Not Allowed", () => {
       return request(app)
@@ -105,31 +92,31 @@ describe("/", () => {
           body.articles.should.have.all.property("author", "icellusedkars")
           expect(body.articles).to.have.lengthOf(6)
         })
-   });
-   it("GET /articles?topic= status: 200, returns articles by the topic param", () => {
-    return request(app)
-      .get("/api/articles?topic=mitch")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.articles[0].topic).to.eql("mitch")
-      })
     });
-  it("GET /articles status: 200, default returns articles sorted by date", () => {
-    return request(app)
-      .get("/api/articles")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.articles).to.be.descendingBy("created_at")
-      })
+    it("GET /articles?topic= status: 200, returns articles by the topic param", () => {
+      return request(app)
+        .get("/api/articles?topic=mitch")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles[0].topic).to.eql("mitch")
+        })
     });
-  it("GET /articles?sort_by=not_a_column status: 400, returns Undefined Column", () => {
-    return request(app)
-      .get("/api/articles?sort_by=not_a_column")
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Undefined Column")
-      })
-    }); 
+    it("GET /articles status: 200, default returns articles sorted by date", () => {
+      return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.descendingBy("created_at")
+        })
+    });
+    it("GET /articles?sort_by=not_a_column status: 400, returns Undefined Column", () => {
+      return request(app)
+        .get("/api/articles?sort_by=not_a_column")
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Undefined Column")
+        })
+    });
     it("GET /articles?order=asc: status: 200, order is ascending", () => {
       return request(app)
         .get("/api/articles?order=asc")
@@ -137,36 +124,35 @@ describe("/", () => {
         .then(({ body }) => {
           expect(body.articles).to.be.ascendingBy("article_id")
         })
-      }); 
-  it("GET /articles?order=not_an_order: status: 200, defaults to desc", () => {
-    return request(app)
-      .get("/api/articles?order=not_an_order")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.articles).to.be.descendingBy("created_at")
-      })
     });
-    it.only('POST/articles status 200 returns new article', () => {
+    it("GET /articles?order=not_an_order: status: 200, defaults to desc", () => {
       return request(app)
-      .post("/api/articles")
-      .send({
-        title: "A very interesting Article",
-        body: "This article is very interesting because I say it is!",
-        topic: "mitch",
-        author: "icellusedkars"
-      })
-      .then(({ body }) =>{
-        console.log(body)
-        expect(body.article).to.have.keys(
-          "author",
-          "article_id",
-          "title",
-          "body",
-          "votes",
-          "topic",
-          "created_at"
-        )
-      })
+        .get("/api/articles?order=not_an_order")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.articles).to.be.descendingBy("created_at")
+        })
+    });
+    it('POST/articles status 200 returns new article', () => {
+      return request(app)
+        .post("/api/articles")
+        .send({
+          title: "A very interesting Article",
+          body: "This article is very interesting because I say it is!",
+          topic: "mitch",
+          username: "icellusedkars"
+        })
+        .then(({ body }) => {
+          expect(body).to.have.keys(
+            "author",
+            "article_id",
+            "title",
+            "body",
+            "votes",
+            "topic",
+            "created_at"
+          )
+        })
     });
     it("PATCH /api/articles - status: 405 - responds with Method Not Allowed", () => {
       return request(app)
@@ -176,265 +162,265 @@ describe("/", () => {
         .then(({ body }) => {
           expect(body.msg).to.eql("Method Not Allowed");
         });
-    }); 
-  it("GET /articles?author= status: 404, returns Route Not Found", () => {
-    return request(app)
-      .get("/api/articles?author=NOTANAUTHOR9999")
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Route Not Found")
-      })
-   });
-   it("GET /articles?topic= status: 404, returns Route Not Found", () => {
-    return request(app)
-      .get("/api/articles?topic=NOTATOPIC9999999")
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Route Not Found")
-      })
-   });
+    });
+    it("GET /articles?author= status: 404, returns Route Not Found", () => {
+      return request(app)
+        .get("/api/articles?author=NOTANAUTHOR9999")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
+    });
+    it("GET /articles?topic= status: 404, returns Route Not Found", () => {
+      return request(app)
+        .get("/api/articles?topic=NOTATOPIC9999999")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
+    });
   });
 
   describe("/api/articles/:article_id", () => {
     it("GET /articles/:article_id - status 200 - returns one article with matching ID ", () => {
       return request(app)
-      .get("/api/articles/1")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.article).to.have.keys(
-          "article_id",
-          "title",
-          "body",
-          "votes",
-          "topic",
-          "author",
-          "created_at",
-          "comment_count"
-        )
-      }) 
+        .get("/api/articles/1")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.article).to.have.keys(
+            "article_id",
+            "title",
+            "body",
+            "votes",
+            "topic",
+            "author",
+            "created_at",
+            "comment_count"
+          )
+        })
     })
     it("GET /articles/not_valid_id - status 404 - responds with Invalid ID", () => {
       return request(app)
-      .get("/api/articles/99999999")
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Route Not Found")
-      })
+        .get("/api/articles/99999999")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
     })
     it("GET /articles/wrong_value_type - status 400 - responds with Invalid ID", () => {
       return request(app)
-      .get("/api/articles/not_a_number")
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Invalid ID")
-      })
-    }) 
+        .get("/api/articles/not_a_number")
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Invalid ID")
+        })
+    })
     it("PATCH /articles/:article_id - status 200 - responds with updated incremented vote", () => {
       return request(app)
-      .patch("/api/articles/1")
-      .send({ inc_votes: 10 })
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.article.votes).to.eql(110)
-      })
+        .patch("/api/articles/1")
+        .send({ inc_votes: 10 })
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.article.votes).to.eql(110)
+        })
     })
     it("PATCH /articles/:article_id - status 200 - responds with updated decremented vote", () => {
       return request(app)
-      .patch("/api/articles/1")
-      .send({ inc_votes: -10 })
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.article.votes).to.eql(90)
-      })
+        .patch("/api/articles/1")
+        .send({ inc_votes: -10 })
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.article.votes).to.eql(90)
+        })
     })
     it("PATCH /articles/:article_id - status 404 - responds with Route Not Found", () => {
       return request(app)
-      .patch("/api/articles/999999")
-      .send({ inc_votes: -2})
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Route Not Found")
-      })
+        .patch("/api/articles/999999")
+        .send({ inc_votes: -2 })
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
     })
     it("PATCH /articles/:article_id - status 200 - incomplete request returns unchanged article", () => {
       return request(app)
-      .patch("/api/articles/1")
-      .send({inc_votes: "valid"})
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.article).to.have.keys(
-          "article_id",
-          "title",
-          "body",
-          "votes",
-          "topic",
-          "author",
-          "created_at"
+        .patch("/api/articles/1")
+        .send({ inc_votes: "valid" })
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.article).to.have.keys(
+            "article_id",
+            "title",
+            "body",
+            "votes",
+            "topic",
+            "author",
+            "created_at"
           )
-      })
+        })
     })
   })
 
   describe("/api/articles/:article_id/comments", () => {
-    it("GET /:article_id/comments - status 200 - returns", () => {
+    it("GET /:article_id/comments - status 200 - returns a list of comments", () => {
       return request(app)
-      .get("/api/articles/1/comments")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.comments).to.have.lengthOf(13)
-        expect(body.comments).to.be.descendingBy("created_at")
-      })
+        .get("/api/articles/1/comments")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comments).to.have.lengthOf(13)
+          expect(body.comments).to.be.descendingBy("created_at")
+        })
     })
-    it("GET /:article_id/comments - status 200 - returns", () => {
+    it("GET /:article_id/comments - status 200 - returns a list of comments", () => {
       return request(app)
-      .get("/api/articles/2/comments")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.comments).to.have.lengthOf(0)
-      })
+        .get("/api/articles/2/comments")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comments).to.have.lengthOf(0)
+        })
     })
     it("GET /invalid_article/comments - status 404 - returns with Route Not Found", () => {
       return request(app)
-      .get("/api/articles/99999999/comments")
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Route Not Found")
-      })
+        .get("/api/articles/99999999/comments")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
     })
     it("GET /:article_id/comments?sort_by=votes - status 200 - returns comments sorted by votes ", () => {
       return request(app)
-      .get("/api/articles/1/comments?sort_by=votes")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.comments).to.be.descendingBy("votes")
-      })
+        .get("/api/articles/1/comments?sort_by=votes")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comments).to.be.descendingBy("votes")
+        })
     })
     it("GET /:article_id/comments?order=asc - status 200 - returns comments sorted ascendingly ", () => {
       return request(app)
-      .get("/api/articles/1/comments?order=asc")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.comments).to.be.ascendingBy("created_at")
-      })
+        .get("/api/articles/1/comments?order=asc")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comments).to.be.ascendingBy("created_at")
+        })
     })
     it("POST /:article_id/comments - status 201 - returns new comment with all keys ", () => {
       return request(app)
-      .post("/api/articles/1/comments")
-      .send({
-        username: "icellusedkars",
-        body: "I enjoyed this content very much"
-      })
-      .expect(201)
-      .then(({ body }) => {
-        expect(body.comment).to.have.keys(
-          "comment_id",
-          "votes",
-          "created_at",
-          "author",
-          "article_id",
-          "body"
-        )
-      })
+        .post("/api/articles/1/comments")
+        .send({
+          username: "icellusedkars",
+          body: "I enjoyed this content very much"
+        })
+        .expect(201)
+        .then(({ body }) => {
+          expect(body.comment).to.have.keys(
+            "comment_id",
+            "votes",
+            "created_at",
+            "author",
+            "article_id",
+            "body"
+          )
+        })
     })
     it("POST /not_an_id/comments - status 400 - responds with Key Violation", () => {
       return request(app)
-      .post("/api/articles/999999/comments")
-      .send({
-        username: "icellusedkars",
-        body: "I enjoyed this content very much"
-      })
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Key Violation")
-      })
+        .post("/api/articles/999999/comments")
+        .send({
+          username: "icellusedkars",
+          body: "I enjoyed this content very much"
+        })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Key Violation")
+        })
     })
     it("POST /:article_id/comments - status 400 - responds with Cannot Be Null", () => {
       return request(app)
-      .post("/api/articles/1/comments")
-      .send({ wrong: "input" })
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Cannot Be Null")
-      })
+        .post("/api/articles/1/comments")
+        .send({ wrong: "input" })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Cannot Be Null")
+        })
     })
   })
 
   describe("/api/comments/:comment_id", () => {
     it("PATCH /comments/:comment_id - status 200 - returns comments with updated votes", () => {
       return request(app)
-      .patch("/api/comments/1")
-      .send({ inc_votes: 10 })
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.comment.votes).to.eql(26)
-      })
+        .patch("/api/comments/1")
+        .send({ inc_votes: 10 })
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comment.votes).to.eql(26)
+        })
     })
     it("PATCH /comments/:comment_id - status 404 - responds with Route Not Found", () => {
       return request(app)
-      .patch("/api/comments/999999")
-      .send({ inc_votes: -2})
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Route Not Found")
-      })
+        .patch("/api/comments/999999")
+        .send({ inc_votes: -2 })
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
     })
     it("PATCH /comments/:comment_id - status 200 - when patch send is invalid returns unchanged comment", () => {
       return request(app)
-      .patch("/api/comments/1")
-      .send({not: "allowed"})
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.comment).to.have.keys(          
-        "comment_id",
-        "votes",
-        "created_at",
-        "author",
-        "article_id",
-        "body")
-      })
+        .patch("/api/comments/1")
+        .send({ not: "allowed" })
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.comment).to.have.keys(
+            "comment_id",
+            "votes",
+            "created_at",
+            "author",
+            "article_id",
+            "body")
+        })
     })
     it("DELETE /comments/:comment_id - status 204 - deletes specified comment", () => {
       return request(app)
-      .delete("/api/comments/2")
-      .expect(204)
-      .then(({ body }) => {
-        expect(body).to.eql({})
-      })
+        .delete("/api/comments/2")
+        .expect(204)
+        .then(({ body }) => {
+          expect(body).to.eql({})
+        })
     })
     it("DELETE /comments/:not_valid_id - status 404 - when comment ID doesnt exist", () => {
       return request(app)
-      .delete("/api/comments/999999")
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Route Not Found")
-      })
+        .delete("/api/comments/999999")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
     })
   })
 
   describe("/api/users", () => {
     it("GET /:username - status 200 - returns the specific user object that matches username", () => {
       return request(app)
-      .get("/api/users/icellusedkars")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.user.username).to.eql("icellusedkars")
-      })
+        .get("/api/users/icellusedkars")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.user.username).to.eql("icellusedkars")
+        })
     })
     it("GET /:username - status 404 - when user does not exist responds with 404", () => {
       return request(app)
-      .get("/api/users/NOTAUSER999999")
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Route Not Found")
-      })
+        .get("/api/users/NOTAUSER999999")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Route Not Found")
+        })
     })
     it('PUT - status 405 - methods not allowed return with 405', () => {
       return request(app)
-      .put("/api/users")
-      .expect(405)
-      .then(({ body }) => {
-        expect(body.msg).to.eql("Method Not Allowed")
-      })
+        .put("/api/users")
+        .expect(405)
+        .then(({ body }) => {
+          expect(body.msg).to.eql("Method Not Allowed")
+        })
     });
   })
 

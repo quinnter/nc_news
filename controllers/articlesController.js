@@ -80,12 +80,10 @@ exports.postArticleComment = (req, res, next) => {
 }
 
 exports.postArticle = (req, res, next) => {
-  const {title, body, author, topic } = req.body
-  const newArticleKeys = { title, body, author, topic }
-  console.log(newArticleKeys)
+  const {title, body, username, topic } = req.body
+  const newArticleKeys = { title, body, author: username , topic }
   insertArticleComment(newArticleKeys)
   .then(([article]) => {
-    console.log(article)
     if (!article) return Promise.reject({ code: 404 })
     else res.status(201).send({article})
   })

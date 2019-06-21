@@ -1,5 +1,5 @@
-const  data  = require('../data/index');
-const { createRef, commentsWithArticleId, formatDate, renameKeys } =require("../../utils/formatting-functions")
+const data = require('../data/index');
+const { createRef, commentsWithArticleId, formatDate, renameKeys } = require("../../utils/formatting-functions")
 
 exports.seed = (knex, Promise) => {
   return knex.migrate
@@ -7,28 +7,22 @@ exports.seed = (knex, Promise) => {
     .then(() => knex.migrate.latest())
     .then(() => {
       return knex
-      .insert(data.endPointsData)
-      .into('endpoints')
-      .returning('*')
+        .insert(data.topicsData)
+        .into('topics')
+        .returning('*')
     })
     .then(() => {
       return knex
-      .insert(data.topicsData)
-      .into('topics')
-      .returning('*')
-    })
-    .then(() => {
-      return knex
-      .insert(data.usersData)
-      .into('users')
-      .returning('*')
+        .insert(data.usersData)
+        .into('users')
+        .returning('*')
     })
     .then(() => {
       const formattedArticles = formatDate(data.articlesData)
-      return knex 
-      .insert(formattedArticles)
-      .into('articles')
-      .returning('*')
+      return knex
+        .insert(formattedArticles)
+        .into('articles')
+        .returning('*')
     })
     .then((insertedArticles) => {
       const formattedComments = formatDate(data.commentsData)
@@ -37,8 +31,8 @@ exports.seed = (knex, Promise) => {
       const articleLookup = createRef(insertedArticles, "title", "article_id")
       const completedComments = commentsWithArticleId(commentsWithArticle, articleLookup)
       return knex
-      .insert(completedComments)
-      .into('comments')
-      .returning('*')
+        .insert(completedComments)
+        .into('comments')
+        .returning('*')
     })
 };
