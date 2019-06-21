@@ -1,0 +1,23 @@
+{"/api/topics": 
+    {"GET": {"description": "Returns a topics object with an array of all the topics", "response" : 
+        { "topics":
+    [ { "slug": "mitch", "description": "The man, the Mitch, the legend" },
+      { "slug": "cats", "description": "Not dogs" },
+      { "slug": "paper", "description": "what books are made of" } ] }}, 
+      "POST": {"description" : "Returns the new topic",
+        "send" : {
+          "slug" : "topic name",
+          "description" : "topic description" 
+        },
+        "response" : {
+            "topic" : {
+                "slug" : "topic name",
+                "description": "topic description"
+            }
+        }
+        }
+    },
+    "/api/articles" : {
+        "GET" : "Returns an articles object with an array of articles, with a limit of 10 articles per page"
+    } 
+}

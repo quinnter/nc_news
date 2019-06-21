@@ -38,11 +38,12 @@ describe("/", () => {
   });
 
   describe("/api/topics", () => {
-    it("GET status: 200, and returns a list of topics", () => {
+    it("GET status: 200, and returns an array of topics", () => {
       return request(app)
         .get("/api/topics")
         .expect(200)
         .then(({ body }) => {
+          console.log(body)
           expect(body).to.haveOwnProperty("topics");
         });
     });
@@ -53,7 +54,7 @@ describe("/", () => {
         .then(({ body }) => {
         })
     });
-    it('POST status 201 - returns new topic', () => {
+    it.only('POST status 201 - returns new topic', () => {
       return request(app)
       .post("/api/topics")
       .send({
@@ -76,7 +77,7 @@ describe("/", () => {
   });
 
   describe("/api/articles", () => {
-    it("GET status: 200, and returns a table of articles with all keys and comment count, with a limit of ten articles", () => {
+    it("GET status: 200, and returns an object with an array of articles with all keys and comment count, with a limit of ten articles", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
