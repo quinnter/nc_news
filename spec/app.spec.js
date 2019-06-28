@@ -37,7 +37,7 @@ describe("/", () => {
     });
   });
 
-  describe("/api/topics", () => {
+  describe.only("/api/topics", () => {
     it("GET status: 200, and returns an array of topics", () => {
       return request(app)
         .get("/api/topics")
@@ -52,19 +52,28 @@ describe("/", () => {
         .get("/api/topics/mitch")
         .expect(200)
         .then(({ body }) => {
+          console.log(body)
         })
     });
-    it.only('POST status 201 - returns new topic', () => {
+    it('GET /:not_a_topic status: 404, returns a Not Found Error', () => {
       return request(app)
-      .post("/api/topics")
-      .send({
-        slug: "Testing",
-        description: "Testing is a good way to make good code"
-      })
-      .expect(201)
-      .then(({ body }) => {
-        expect(body.topic).to.have.keys("slug", "description")
-      })
+        .get("/api/topics/banana")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).to.eql('Route Not Found')
+        })
+    });
+    it('POST status 201 - returns new topic', () => {
+      return request(app)
+        .post("/api/topics")
+        .send({
+          slug: "Testing",
+          description: "Testing is a good way to make good code"
+        })
+        .expect(201)
+        .then(({ body }) => {
+          expect(body.topic).to.have.keys("slug", "description")
+        })
     });
     it("PUT/DELETE status: 405 - responds with Method Not Allowed", () => {
       return request(app)
@@ -273,11 +282,11 @@ describe("/", () => {
     })
     it('DELETE /articles/:article_id - status 204 - deletes article by id', () => {
       return request(app)
-      .delete("/api/articles/2")
-      .expect(204)
-      .then(({ body }) => {
-        expect(body).to.eql({})
-      })
+        .delete("/api/articles/2")
+        .expect(204)
+        .then(({ body }) => {
+          expect(body).to.eql({})
+        })
     });
   })
 
@@ -417,14 +426,14 @@ describe("/", () => {
     })
   })
 
-  describe.only("/api/users", () => {
+  describe("/api/users", () => {
     it('GET status 200 - returns a list of users', () => {
       return request(app)
-      .get("/api/users")
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.users).to.have.lengthOf(4)
-      })
+        .get("/api/users")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.users).to.have.lengthOf(4)
+        })
     });
     it("GET /:username - status 200 - returns the specific user object that matches username", () => {
       return request(app)
@@ -444,15 +453,15 @@ describe("/", () => {
     })
     it('POST / status 201 - returns new user', () => {
       return request(app)
-      .post("/api/users")
-      .send({
-        username: "TheTester",
-        name: "Tim"
-      })
-      .expect(201)
-      .then(({ body }) => {
-        expect(body.user).to.have.keys("username", "name", "avatar_url")
-      })
+        .post("/api/users")
+        .send({
+          username: "TheTester",
+          name: "Tim"
+        })
+        .expect(201)
+        .then(({ body }) => {
+          expect(body.user).to.have.keys("username", "name", "avatar_url")
+        })
     });
     it('PUT/DELETE - status 405 - methods not allowed return with 405', () => {
       return request(app)
