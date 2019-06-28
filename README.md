@@ -1,5 +1,12 @@
 # nc_news
 
+This is my API for my NC News project that I completed at Northcoders during the backend block.
+
+## Built With
+[PSQL](https://www.postgresql.org/docs/9.2/app-psql.html)
+[KnexJs](https://knexjs.org/)
+
+
 ## Available Scripts
 
 Create development and test databases locally:
