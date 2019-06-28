@@ -43,7 +43,6 @@ describe("/", () => {
         .get("/api/topics")
         .expect(200)
         .then(({ body }) => {
-          console.log(body)
           expect(body).to.haveOwnProperty("topics");
         });
     });
@@ -52,7 +51,7 @@ describe("/", () => {
         .get("/api/topics/mitch")
         .expect(200)
         .then(({ body }) => {
-          console.log(body)
+          expect(body.topic.slug).to.eql("mitch")
         })
     });
     it('GET /:not_a_topic status: 404, returns a Not Found Error', () => {
