@@ -37,7 +37,7 @@ describe("/", () => {
     });
   });
 
-  describe.only("/api/topics", () => {
+  describe("/api/topics", () => {
     it("GET status: 200, and returns an array of topics", () => {
       return request(app)
         .get("/api/topics")
@@ -142,7 +142,7 @@ describe("/", () => {
         .get("/api/articles?order=asc")
         .expect(200)
         .then(({ body }) => {
-          expect(body.articles).to.be.ascendingBy("article_id")
+          expect(body.articles).to.be.ascendingBy("created_at")
         })
     });
     it("GET /articles?order=not_an_order: status: 200, defaults to desc", () => {

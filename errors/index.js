@@ -1,6 +1,6 @@
 exports.handle404 = (err, req, res, next) => {
   const codes = { 404: "Route Not Found" }
-  if (codes[err.code]) res.status(404).send({msg: codes[err.code]})
+  if (codes[err.code]) res.status(404).send({ msg: codes[err.code] })
   else next(err);
 }
 
@@ -17,14 +17,14 @@ exports.handle500 = (err, req, res, next) => {
 };
 
 exports.handle400 = (err, req, res, next) => {
-  const codes = { 
-    400: "Bad Request", 
+  const codes = {
+    400: "Bad Request",
     '42703': "Undefined Column",
     '22P02': "Invalid ID",
-    '23503': "Key Violation" ,
+    '23503': "Key Violation",
     '23502': "Cannot Be Null"
   }
-  if (codes[err.code]) res.status(400).send({msg: codes[err.code]})
+  if (codes[err.code]) res.status(400).send({ msg: codes[err.code] })
   else next(err);
 }
 
