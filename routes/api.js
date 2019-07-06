@@ -4,9 +4,11 @@ const topicsRouter = require("./topicsRouter")
 const articlesRouter = require("./articlesRouter")
 const usersRouter = require("./usersRouter")
 const commentsRouter = require("./commentsRouter")
+const endpointsJSON = require("../endpoints.json")
 
 apiRouter
   .route('/')
+  .get(endpointsJSON)
   .all(methodNotAllowed);
 
 apiRouter.use("/topics", topicsRouter)
