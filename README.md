@@ -8,11 +8,17 @@ The project is hosted on Heroku and can be visited [here](https://lauraq-nc-news
 
 ## Built With
 [PSQL](https://www.postgresql.org/docs/9.2/app-psql.html)
+
 [KnexJs](https://knexjs.org/)
+
 [Express](https://expressjs.com/)
+
 [Node](https://nodejs.org/en/)
+
 [npm](https://www.npmjs.com/get-npm)
+
 [Mocha](https://mochajs.org/)
+
 [Chai](https://www.chaijs.com/)
 
 ---
