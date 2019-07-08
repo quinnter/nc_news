@@ -2,7 +2,7 @@
 
 This is my API for my NC News project that I completed at Northcoders during the backend block. This is a database that stores articles, topics, comments, and users. 
 
-The project is hosted on Heroku and can be visited [here](https://lauraq-nc-news.herokuapp.com/api/articles)
+The project is hosted on Heroku and can be visited [here](https://lauraq-nc-news.herokuapp.com/api) where all the endpoints and example responses can be seen.
 
 ---
 
